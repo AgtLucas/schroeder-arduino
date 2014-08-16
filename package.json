@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/AgtLucas/schroeder-arduino/issues"
   },
-  "homepage": "https://github.com/AgtLucas/schroeder-arduino"
+  "homepage": "https://github.com/AgtLucas/schroeder-arduino",
+  "dependencies": {
+    "express": "^4.8.4",
+    "logfmt": "^1.1.2"
+  }
 }
