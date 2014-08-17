@@ -23,6 +23,20 @@ exports.create = function(req, res) {
   })
 }
 
+exports.createGet = function(req, res) {
+  var medida = {
+    id: "",
+    temperature: req.param('temperatura'),
+    humidity: req.param('humidade'),
+    createdAt: new Date(),
+    updateAt: new Date(),
+  };
+  db.Balduino.create(medida).success(function(entity) {
+    res.statusCode = 201
+    res.json(entity)
+  })
+}
+
 exports.update = function(req, res) {
   db.Balduino.find({ where: { id: req.param('id') } }).success(function(entity) {
     if (entity) {

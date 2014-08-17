@@ -31,6 +31,7 @@ if ('development' === app.get('env')) {
 app.get('/schroeder/balduinos', balduinos.findAll)
 app.get('/schroeder/balduinos/:id', balduinos.find)
 app.post('/schroeder/balduinos', balduinos.create)
+app.get('/schroeder/create', balduinos.createGet)
 app.put('/schroeder/balduinos/:id', balduinos.update)
 app.del('/schroeder/balduinos/:id', balduinos.destroy)
 
