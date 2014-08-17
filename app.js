@@ -7,6 +7,7 @@ var express        = require('express')
   , path           = require('path')
   , db             = require('./models')
 
+  , balduinos = require('./routes/balduinos')
 
 var app = express()
 
@@ -24,6 +25,12 @@ if ('development' === app.get('env')) {
   app.use(errorHandler())
 }
 
+
+app.get('/schroeder/balduinos', balduinos.findAll)
+app.get('/schroeder/balduinos/:id', balduinos.find)
+app.post('/schroeder/balduinos', balduinos.create)
+app.put('/schroeder/balduinos/:id', balduinos.update)
+app.del('/schroeder/balduinos/:id', balduinos.destroy)
 
 
 db

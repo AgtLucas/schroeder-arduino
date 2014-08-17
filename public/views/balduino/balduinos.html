@@ -1,0 +1,97 @@
+<div>
+
+    <h2>Balduinos</h2>
+
+    <script type = "text/ng-template" id="balduino-save.html">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form name="form" role="form" novalidate
+                      class="ng-scope ng-invalid ng-invalid-required ng-dirty"
+                      ng-submit="ok()">
+
+                    <div class="modal-header">
+                        <button type="button" class="close"
+                                ng-click="cancel()">&times;</button>
+                        <h4 class="modal-title" id="myBalduinoLabel">Create or edit a Balduino</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>ID</label>
+                            <input type="text" class="form-control" name="id"
+                                   ng-model="balduino.id" readonly>
+                        </div>
+
+                        
+                        <div class="form-group">
+                            <label>temperature:</label>
+                            
+                            <input type="number" step="any" class="form-control" name="temperature"
+                                   ng-model="balduino.temperature" ng-required="false"
+                                   />
+                            <span class="error" ng-show="form.temperature.$error.min">Must be greater than or equal to .</span>
+                            <span class="error" ng-show="form.temperature.$error.max">Must be less than or equal to .</span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>humidity:</label>
+                            
+                            <input type="number" step="any" class="form-control" name="humidity"
+                                   ng-model="balduino.humidity" ng-required="false"
+                                   />
+                            <span class="error" ng-show="form.humidity.$error.min">Must be greater than or equal to .</span>
+                            <span class="error" ng-show="form.humidity.$error.max">Must be less than or equal to .</span>
+                        </div>
+                        
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" ng-click="cancel()">Cancel
+                        </button>
+                        <button type="submit" ng-disabled="form.$invalid" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
+
+    <button class="btn btn-primary btn-lg" ng-click="create()">
+        <span class="glyphicon glyphicon-flash"></span> Create a new Balduino
+    </button>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>ID</th>
+                
+                <th>temperature</th>
+                
+                <th>humidity</th>
+                
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="balduino in balduinos">
+                <td>{{balduino.id}}</td>
+                
+                <td>{{balduino.temperature }}</td>
+                
+                <td>{{balduino.humidity }}</td>
+                
+                <td>
+                    <button type="submit"
+                            ng-click="update(balduino.id)"
+                            class="btn">
+                        <span class="glyphicon glyphicon-pencil"></span> Edit
+                    </button>
+                    <button type="submit"
+                            ng-click="delete(balduino.id)"
+                            class="btn btn-danger">
+                        <span class="glyphicon glyphicon-remove-circle"></span> Delete
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
