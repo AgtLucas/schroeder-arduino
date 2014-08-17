@@ -1,4 +1,5 @@
 var express        = require('express')
+  , cors           = require('cors')
   , bodyParser     = require('body-parser')
   , errorHandler   = require('errorhandler')
   , methodOverride = require('method-override')
@@ -18,6 +19,7 @@ app.set('view engine', 'jade')
 app.use(morgan('dev'))
 app.use(bodyParser())
 app.use(methodOverride())
+app.use(cors())
 app.use(express.static(path.join(__dirname, 'public')))
 
 // development only
