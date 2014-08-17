@@ -2,10 +2,24 @@ var fs        = require('fs')
   , path      = require('path')
   , Sequelize = require('sequelize')
   , lodash    = require('lodash')
-  , sequelize = new Sequelize('balduino', '', '', {
-      dialect: "postgres"
-    })
   , db        = {}
+
+  if (process.env.HEROKU_POSTGRESQL_PURPLE_URL) {
+    var match = process.env.HEROKU_POSTGRESQL_PURPLE_URL.match(/postgres:\/\/([^:]+):([^@]+)@([^:]+):(\d+)\/(.+)/)
+
+    var sequelize = new Sequelize(match[5], match[1], match[2], {
+      dialect: 'postgres',
+      protocol: 'postgres',
+      port: match[4],
+      host: match[3],
+      loggin: false
+    });
+
+  } else {
+    var sequelize = new Sequelize('balduino', 'root', 'root', {
+      dialect: 'mysql'
+    });
+  }
 
 fs
   .readdirSync(__dirname)
