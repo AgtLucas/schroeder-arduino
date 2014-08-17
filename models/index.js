@@ -2,7 +2,7 @@ var fs        = require('fs')
   , path      = require('path')
   , Sequelize = require('sequelize')
   , lodash    = require('lodash')
-  , sequelize = new Sequelize('sequelize_test', '', '', {
+  , sequelize = new Sequelize('balduino', '', '', {
       dialect: "postgres"
     })
   , db        = {}
