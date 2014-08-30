@@ -8,11 +8,10 @@ var express        = require('express')
   , path           = require('path')
   , db             = require('./models')
 
-  , balduinos = require('./routes/balduinos')
+  , arduinos = require('./routes/arduino')
 
 var app = express()
 
-// all environments
 app.set('port', process.env.PORT || 3000)
 app.set('views', __dirname + '/views')
 app.set('view engine', 'jade')
@@ -28,12 +27,12 @@ if ('development' === app.get('env')) {
 }
 
 
-app.get('/schroeder/balduinos', balduinos.findAll)
-app.get('/schroeder/balduinos/:id', balduinos.find)
-app.post('/schroeder/balduinos', balduinos.create)
-app.get('/schroeder/create', balduinos.createGet)
-app.put('/schroeder/balduinos/:id', balduinos.update)
-app.del('/schroeder/balduinos/:id', balduinos.destroy)
+app.get('/schroeder/arduinos', arduinos.findAll)
+app.get('/schroeder/arduinos/:id', arduinos.find)
+app.post('/schroeder/arduinos', arduinos.create)
+app.get('/schroeder/create', arduinos.createGet)
+app.put('/schroeder/arduinos/:id', arduinos.update)
+app.del('/schroeder/arduinos/:id', arduinos.destroy)
 
 
 db

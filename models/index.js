@@ -16,7 +16,7 @@ var fs        = require('fs')
     });
 
   } else {
-    var sequelize = new Sequelize('balduino', 'root', 'root', {
+    var sequelize = new Sequelize('arduino', 'root', 'root', {
       dialect: 'mysql'
     });
   }

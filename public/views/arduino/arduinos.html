@@ -1,0 +1,20 @@
+<div class="col-sm-12">
+  <div class="col-sm-6">
+    <table class="table table-bordered table-condensed">
+      <thead>
+        <tr>
+          <th class="text-center">Código</th>
+          <th class="text-center">Temperatura</th>
+          <th class="text-center">Humidade</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="obj in arduinos">
+          <td class="text-center">{{obj.id}}</td>
+          <td class="text-center">{{obj.temperature }}</td>
+          <td class="text-center">{{obj.humidity }}</td>
+        <tr>
+      </tbody>
+    </table>
+  </div>
+</div>

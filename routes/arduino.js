@@ -1,13 +1,13 @@
 var db = require('../models')
 
 exports.findAll = function(req, res) {
-  db.Balduino.findAll().success(function(entities) {
+  db.Arduino.findAll().success(function(entities) {
     res.json(entities)
   })
 }
 
 exports.find = function(req, res) {
-  db.Balduino.find({ where: { id: req.param('id') } }).success(function(entity) {
+  db.Arduino.find({ where: { id: req.param('id') } }).success(function(entity) {
     if (entity) {
       res.json(entity)
     } else {
@@ -17,7 +17,7 @@ exports.find = function(req, res) {
 }
 
 exports.create = function(req, res) {
-  db.Balduino.create(req.body).success(function(entity) {
+  db.Arduino.create(req.body).success(function(entity) {
     res.statusCode = 201
     res.json(entity)
   })
@@ -31,14 +31,14 @@ exports.createGet = function(req, res) {
     createdAt: new Date(),
     updateAt: new Date(),
   };
-  db.Balduino.create(medida).success(function(entity) {
+  db.Arduino.create(medida).success(function(entity) {
     res.statusCode = 201
     res.json(entity)
   })
 }
 
 exports.update = function(req, res) {
-  db.Balduino.find({ where: { id: req.param('id') } }).success(function(entity) {
+  db.Arduino.find({ where: { id: req.param('id') } }).success(function(entity) {
     if (entity) {
       entity.updateAttributes(req.body).success(function(entity) {
         res.json(entity)
@@ -50,7 +50,7 @@ exports.update = function(req, res) {
 }
 
 exports.destroy = function(req, res) {
-  db.Balduino.find({ where: { id: req.param('id') } }).success(function(entity) {
+  db.Arduino.find({ where: { id: req.param('id') } }).success(function(entity) {
     if (entity) {
       entity.destroy().success(function() {
         res.send(204)
