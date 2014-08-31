@@ -34,7 +34,7 @@
       <input type="password" class="form-control" placeholder="Senha" ng-model="password">
       <br>
       <div class="col-sm-12 text-center">
-        <button class="btn btn-success" type="button" style="margin: 5px" ng-click="logar()">
+        <button class="btn btn-success" type="button" style="margin: 5px" ng-click="logar()" ng-disabled="btnLogin">
           <i class="glyphicon glyphicon-ok"></i>&nbsp;&nbsp;Entrar
         </button>
         <button class="btn btn-primary" type="button" style="margin: 5px" ng-click="irRegistrar()">
@@ -60,7 +60,7 @@
         <input type="password" class="form-control" placeholder="Digite sua senha" ng-model="passwordRegister">
       </div>
       <div class="col-sm-12 text-center">
-        <button class="btn btn-success" type="button" style="margin: 5px" ng-click="registrar()">
+        <button class="btn btn-success" type="button" style="margin: 5px" ng-click="registrar()" ng-disabled="btnRegister">
           <i class="glyphicon glyphicon-ok"></i>&nbsp;&nbsp;Salvar
         </button>
         <button class="btn btn-primary" type="button" style="margin: 5px" ng-click="voltar()">

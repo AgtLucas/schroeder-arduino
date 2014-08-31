@@ -9,6 +9,8 @@ angular.module('schroeder')
       emailRegister: "",
       passwordRegister: "",
       showMessagem: false,
+      btnLogin: false,
+      btnRegister: false,
       error: ""
     })
 
@@ -21,6 +23,8 @@ angular.module('schroeder')
         emailRegister: "",
         passwordRegister: "",
         showMessagem: false,
+        btnLogin: false,
+        btnRegister: false,
         error: ""
       });
     };
@@ -34,11 +38,16 @@ angular.module('schroeder')
         emailRegister: "",
         passwordRegister: "",
         showMessagem: false,
+        btnLogin: false,
+        btnRegister: false,
         error: ""
       });
     };
 
     $scope.logar = function(){
+      angular.extend($scope, {
+        btnLogin: true
+      });
       Login.save({ username: $scope.email, password: $scope.password },
       function (data) {
         if(!!data.success){
@@ -51,14 +60,18 @@ angular.module('schroeder')
           $timeout(function(){
             angular.extend($scope,{
               showMessagem: false,
+              btnLogin: false,
               error: ""
             });
-          }, 5000)
+          }, 3000)
         }
       });
     };
 
     $scope.registrar = function(){
+       angular.extend($scope, {
+        btnRegister: true
+      });
       User.save({ nome: $scope.nomeRegister, email: $scope.emailRegister, password: $scope.passwordRegister },
       function (data) {
         if(data.error){
@@ -69,9 +82,10 @@ angular.module('schroeder')
           $timeout(function(){
             angular.extend($scope,{
               showMessagem: false,
+              btnRegister: false,
               error: ''
             });
-          }, 5000)
+          }, 3000)
         }else{
           $scope.voltar();
         }
