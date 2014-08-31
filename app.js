@@ -29,6 +29,10 @@ if ('development' === app.get('env')) {
   app.use(errorHandler())
 }
 
+app.get('/home', function(req, res){
+  res.sendfile('public/home.html');
+});
+
 app.get('/schroeder/arduinos', arduinos.findAll)
 app.get('/schroeder/arduinos/:id', arduinos.find)
 app.post('/schroeder/arduinos', arduinos.create)

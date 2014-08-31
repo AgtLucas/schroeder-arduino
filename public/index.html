@@ -12,7 +12,7 @@
     <link href="lib/jquery-ui/themes/smoothness/jquery-ui.css" rel="stylesheet"/>
     <link href="css/app.css" rel="stylesheet">
   </head>
-  <body>
+  <body ng-controller="schroederCtrl">
    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
      <div class="container">
        <div class="navbar-header">
@@ -24,30 +24,58 @@
          </button>
          <a class="navbar-brand" href="javascript:void(0)">Sistema de Monitoramento</a>
        </div>
-       <div class="collapse navbar-collapse navbar-ex1-collapse">
-         <ul class="nav navbar-nav">
-           <li>
-            <!--<a href="#sensores">Sensores</a>-->
-           </li>
-         </ul>
-       </div>
      </div>
     </nav>
-    <div class="container" ng-view></div>
-    <script src="lib/jquery/dist/jquery.js"></script>
-    <script src="lib/lodash/dist/lodash.js"></script>
+    <div class="container ng-cloak">
+      <form class="form-signin" role="form" ng-show="view == 1">
+      <h2 class="label-login">Login</h2>
+      <input type="text" class="form-control" placeholder="Email" ng-model="email">
+      <br>
+      <input type="password" class="form-control" placeholder="Senha" ng-model="password">
+      <br>
+      <div class="col-sm-12 text-center">
+        <button class="btn btn-success" type="button" style="margin: 5px" ng-click="logar()">
+          <i class="glyphicon glyphicon-ok"></i>&nbsp;&nbsp;Entrar
+        </button>
+        <button class="btn btn-primary" type="button" style="margin: 5px" ng-click="irRegistrar()">
+          <i class="glyphicon glyphicon-user"></i>&nbsp;&nbsp;Registrar
+        </button>
+      </div>
+      <div class="alert alert-danger alert-dismissible" ng-show="showMessagem">
+        <strong>Ops!</strong>  {{error}}
+      </div>
+    </form>
+    <form class="form-signin" role="form" ng-show="view == 2">
+      <h2 class="label-login">Novo usuário</h2>
+      <div class="form-group">
+        <label>Nome</label>
+        <input type="text" class="form-control" placeholder="Digite seu nome" ng-model="nomeRegister">
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="text" class="form-control" placeholder="Digite seu email" ng-model="emailRegister">
+      </div>
+      <div class="form-group">
+        <label>Senha</label>
+        <input type="password" class="form-control" placeholder="Digite sua senha" ng-model="passwordRegister">
+      </div>
+      <div class="col-sm-12 text-center">
+        <button class="btn btn-success" type="button" style="margin: 5px" ng-click="registrar()">
+          <i class="glyphicon glyphicon-ok"></i>&nbsp;&nbsp;Salvar
+        </button>
+        <button class="btn btn-primary" type="button" style="margin: 5px" ng-click="voltar()">
+          <i class="glyphicon glyphicon-arrow-left"></i>&nbsp;&nbsp;Voltar
+        </button>
+      </div>
+      <div class="alert alert-danger alert-dismissible" ng-show="showMessagem">
+        <strong>Ops!</strong>  {{error}}
+      </div>
+    </form>
+    </div>
     <script src="lib/angular/angular.js"></script>
     <script src="lib/angular-resource/angular-resource.js"></script>
-    <script src="lib/angular-route/angular-route.js"></script>
-    <script src="lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-    <script src="lib/angular-ui-date/src/date.js"></script>
     <script src="js/app.js"></script>
-    <script src="js/home/home-controller.js"></script>
-    <script src="js/home/home-service.js"></script>
-    <script src="js/home/home-config.js"></script>
-    <script src="js/register/register-controller.js"></script>
-    <script src="js/register/register-service.js"></script>
-    <script src="js/arduino/arduino-controller.js"></script>
-    <script src="js/arduino/arduino-service.js"></script>
+    <script src="js/index/index-controller.js"></script>
+    <script src="js/index/index-service.js"></script>
   </body>
 </html>

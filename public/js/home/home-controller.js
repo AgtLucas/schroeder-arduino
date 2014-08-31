@@ -1,15 +1,8 @@
 angular.module('schroeder')
-  .controller('HomeController', ['$scope', 'Login', '$window', '$location', '$timeout', '$rootScope', function ($scope, Login, $window, $location, $timeout, $rootScope) {
+  .controller('homeCtrl', ['$scope', '$window', '$timeout', 'User', function ($scope, $window, $timeout, User) {
 
-    angular.extend($scope, {
-      email: "",
-      password: "",
-      showMessagem: false,
-      error: ""
-    })
-
-    $scope.logar = function(){
-      Login.save({ email: $scope.email, password: $scope.password },
+    $scope.registrar = function(){
+      User.save({ nome: $scope.nomeRegister, email: $scope.emailRegister, password: $scope.passwordRegister },
       function (data) {
         if(data.error){
           angular.extend($scope,{
@@ -23,8 +16,9 @@ angular.module('schroeder')
             });
           }, 5000)
         }else{
-          $location.path("sensores");
+          $scope.voltar();
         }
       });
     };
+
   }]);
