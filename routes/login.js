@@ -9,7 +9,3 @@ exports.logar = function(req, res) {
     }
   })
 }
-
-exports.isLogin = function(req, res) {
-  res.json({ success: 1})
-}

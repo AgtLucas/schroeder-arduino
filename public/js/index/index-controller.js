@@ -1,5 +1,5 @@
 angular.module('schroeder')
-  .controller('schroederCtrl', ['$scope', 'Login', '$window', '$timeout', 'User', function ($scope, Login, $window, $timeout, User) {
+  .controller('schroederCtrl', ['$scope', 'Login', '$window', '$timeout', 'User', '$http', function ($scope, Login, $window, $timeout, User, $http) {
 
     angular.extend($scope, {
       view: 1,
@@ -39,22 +39,9 @@ angular.module('schroeder')
     };
 
     $scope.logar = function(){
-      Login.save({ email: $scope.email, password: $scope.password },
+      Login.save({ username: $scope.email, password: $scope.password },
       function (data) {
-        if(data.error){
-          angular.extend($scope,{
-            showMessagem: true,
-            error: data.error
-          });
-          $timeout(function(){
-            angular.extend($scope,{
-              showMessagem: false,
-              error: ''
-            });
-          }, 5000)
-        }else{
-          $window.location.href = "home";
-        }
+        $window.location.href = "/home";
       });
     };
 
