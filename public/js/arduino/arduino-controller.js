@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('schroeder').controller('ArduinoController', ['$scope', 'resolvedArduino',
-  function ($scope, resolvedArduino) {
-    $scope.arduinos = resolvedArduino;
+angular.module('schroeder').controller('ArduinoController', ['$scope', 'Arduino',
+  function ($scope, Arduino) {
+    $scope.arduinos = Arduino.query();
 }]);

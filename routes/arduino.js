@@ -6,6 +6,13 @@ exports.findAll = function(req, res) {
   })
 }
 
+exports.findAllPager = function(req, res) {
+  db.Arduino.findAll({ offset:3, limit: 1 }).success(function(entities) {
+    retorno.dados = entities;
+    res.json(retorno)
+  })
+}
+
 exports.find = function(req, res) {
   db.Arduino.find({ where: { id: req.param('id') } }).success(function(entity) {
     if (entity) {
