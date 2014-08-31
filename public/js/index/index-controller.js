@@ -41,7 +41,20 @@ angular.module('schroeder')
     $scope.logar = function(){
       Login.save({ username: $scope.email, password: $scope.password },
       function (data) {
-        $window.location.href = "/home";
+        if(!!data.success){
+          $window.location.href = "/home";
+        }else{
+          angular.extend($scope,{
+            showMessagem: true,
+            error: "Usuário inválido!"
+          });
+          $timeout(function(){
+            angular.extend($scope,{
+              showMessagem: false,
+              error: ""
+            });
+          }, 5000)
+        }
       });
     };
 

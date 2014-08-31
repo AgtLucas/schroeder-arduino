@@ -38,7 +38,6 @@ app.use(passport.session());
 app.use(app.router);
 });
 
-
 function findById(id, fn) {
   db.User.find({ where: { id: id } }).success(function(entity) {
     if (entity) {
@@ -73,7 +72,12 @@ passport.use(new LocalStrategy(
   function(username, password, done) {
     process.nextTick(function () {
       findByUsername(username, function(err, user) {
-        if (err) { return done(err); }
+        if (err) {
+          return done(err);
+        }
+        if (user == null) {
+          return done(null, null);
+        }
         return done(null, user);
       })
     });
@@ -91,7 +95,7 @@ app.get('/home', ensureAuthenticated, function(req, res){
 app.post('/schroeder/login',
   passport.authenticate('local', { failureRedirect: '/', failureFlash: true }),
   function(req, res) {
-    res.sendfile('public/views/home.html');
+    res.json({ success: 1})
   });
 
 app.get('/logout', function(req, res){
@@ -101,6 +105,7 @@ app.get('/logout', function(req, res){
 
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) { return next(); }
+  console.log("----------------------------------");
   res.redirect('/')
 }
 
