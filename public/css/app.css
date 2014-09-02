@@ -4,7 +4,7 @@ body {
 .label-login{
   text-align: center;
   margin-bottom: 20px;
-  color: orangered;
+  /*color: orangered;*/
 }
 .form-signin {
   max-width: 330px;
@@ -19,5 +19,5 @@ body {
   display: none;
 }
 label{
-  color: orangered;
+  /*color: orangered;*/
 }

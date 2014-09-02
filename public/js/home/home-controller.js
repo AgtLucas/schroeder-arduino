@@ -1,4 +1,4 @@
-angular.module('schroeder')
+angular.module('schroederHome')
   .controller('homeCtrl', ['$scope', '$window', '$timeout', 'User', '$http', function ($scope, $window, $timeout, User, $http) {
 
     $scope.registrar = function(){

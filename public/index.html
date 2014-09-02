@@ -8,7 +8,7 @@
     <link rel="author" href="fabricioronchi.com">
     <meta name="description" content="Temperatura e Humidade em Schroeder">
     <title>Arduino</title>
-    <link href="lib/bootstrap-css/css/bootstrap.css" rel="stylesheet">
+    <link href="lib/bootstrap-css/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/app.css" rel="stylesheet">
   </head>
   <body ng-controller="schroederCtrl">
@@ -33,10 +33,10 @@
       <input type="password" class="form-control" placeholder="Senha" ng-model="password">
       <br>
       <div class="col-sm-12 text-center">
-        <button class="btn btn-default" type="button" style="margin: 5px" ng-click="logar()" ng-disabled="btnLogin">
+        <button class="btn btn-success" type="button" style="margin: 5px" ng-click="logar()" ng-disabled="btnLogin">
           <i class="glyphicon glyphicon-ok"></i>&nbsp;&nbsp;Entrar
         </button>
-        <button class="btn btn-default" type="button" style="margin: 5px" ng-click="irRegistrar()">
+        <button class="btn btn-primary" type="button" style="margin: 5px" ng-click="irRegistrar()">
           <i class="glyphicon glyphicon-user"></i>&nbsp;&nbsp;Registrar
         </button>
       </div>
@@ -59,10 +59,10 @@
         <input type="password" class="form-control" placeholder="Digite sua senha" ng-model="passwordRegister">
       </div>
       <div class="col-sm-12 text-center">
-        <button class="btn btn-default" type="button" style="margin: 5px" ng-click="registrar()" ng-disabled="btnRegister">
+        <button class="btn btn-success" type="button" style="margin: 5px" ng-click="registrar()" ng-disabled="btnRegister">
           <i class="glyphicon glyphicon-ok"></i>&nbsp;&nbsp;Salvar
         </button>
-        <button class="btn btn-default" type="button" style="margin: 5px" ng-click="voltar()">
+        <button class="btn btn-primary" type="button" style="margin: 5px" ng-click="voltar()">
           <i class="glyphicon glyphicon-arrow-left"></i>&nbsp;&nbsp;Voltar
         </button>
       </div>

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('schroeder')
+angular.module('schroederHome')
   .factory('Arduino', ['$resource', function ($resource) {
     return $resource('schroeder/arduinos');
   }]);
