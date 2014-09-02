@@ -4,6 +4,7 @@ body {
 .label-login{
   text-align: center;
   margin-bottom: 20px;
+  color: orangered;
 }
 .form-signin {
   max-width: 330px;
@@ -16,4 +17,7 @@ body {
 }
 .ng-cloak{
   display: none;
+}
+label{
+  color: orangered;
 }

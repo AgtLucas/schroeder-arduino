@@ -92,6 +92,10 @@ app.get('/home', ensureAuthenticated, function(req, res){
   res.sendfile('public/views/home.html', { user: req.user });
 });
 
+app.get('/sensores', ensureAuthenticated, function(req, res){
+  res.sendfile('public/views/arduino/arduinos.html', { user: req.user });
+});
+
 app.post('/schroeder/login',
   passport.authenticate('local', { failureRedirect: '/', failureFlash: true }),
   function(req, res) {
