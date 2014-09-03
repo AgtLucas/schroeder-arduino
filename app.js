@@ -93,7 +93,7 @@ app.get('/home', ensureAuthenticated, function(req, res){
 });
 
 app.get('/sensores', ensureAuthenticated, function(req, res){
-  res.sendfile('public/views/home/home.html', { user: req.user });
+  res.sendfile('public/views/arduino/arduinos.html', { user: req.user });
 });
 
 app.get('/schroeder/arduinos', ensureAuthenticated, arduinos.findAll);
