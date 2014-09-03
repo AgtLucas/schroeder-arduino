@@ -1,5 +1,5 @@
 angular.module('schroederHome')
-  .controller('homeCtrl', ['$scope', '$window', '$timeout', 'User', '$http', function ($scope, $window, $timeout, User, $http) {
+  .controller('homeCtrl', ['$scope', '$window', '$timeout', 'User', function ($scope, $window, $timeout, User) {
 
     $scope.registrar = function(){
       User.save({ nome: $scope.nomeRegister, email: $scope.emailRegister, password: $scope.passwordRegister },
@@ -22,8 +22,7 @@ angular.module('schroederHome')
     };
 
     $scope.sair = function(){
-      $http({method: 'GET', url: '/logout'});
-      $window.location.href = "/";
+      $window.location.href = "/logout";
     }
 
   }]);

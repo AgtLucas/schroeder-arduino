@@ -93,8 +93,10 @@ app.get('/home', ensureAuthenticated, function(req, res){
 });
 
 app.get('/sensores', ensureAuthenticated, function(req, res){
-  res.sendfile('public/views/home.html', { user: req.user });
+  res.sendfile('public/views/home/home.html', { user: req.user });
 });
+
+app.get('/schroeder/arduinos', ensureAuthenticated, arduinos.findAll);
 
 app.post('/schroeder/login',
   passport.authenticate('local', { failureRedirect: '/', failureFlash: true }),
@@ -109,7 +111,6 @@ app.get('/logout', function(req, res){
 
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) { return next(); }
-  console.log("----------------------------------");
   res.redirect('/')
 }
 
@@ -117,7 +118,7 @@ if ('development' === app.get('env')) {
   app.use(errorHandler())
 }
 
-app.get('/schroeder/arduinos', arduinos.findAll)
+
 app.get('/schroeder/arduinos/:id', arduinos.find)
 app.post('/schroeder/arduinos', arduinos.create)
 app.get('/schroeder/create', arduinos.createGet)
