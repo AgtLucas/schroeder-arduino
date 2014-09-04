@@ -2,5 +2,7 @@
 
 angular.module('schroederHome')
   .factory('User', ['$resource', function ($resource) {
-    return $resource('schroeder/users/');
-  }]);
+    return $resource('/schroeder/users/info', {}, {
+    'getInfo': { method: 'GET'}
+  });
+}]);

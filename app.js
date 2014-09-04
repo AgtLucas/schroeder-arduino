@@ -92,6 +92,13 @@ app.get('/home', ensureAuthenticated, function(req, res){
   res.sendfile('public/views/home.html', { user: req.user });
 });
 
+app.get('/schroeder/users/info',ensureAuthenticated, function(req, res){
+  var retorno = {
+    nome: req.user.nome
+  };
+  res.json(retorno);
+});
+
 app.get('/sensores', ensureAuthenticated, function(req, res){
   res.sendfile('public/views/arduino/arduinos.html', { user: req.user });
 });
@@ -129,6 +136,8 @@ app.get('/schroeder/users/:id', users.find)
 app.post('/schroeder/users', users.newUser)
 app.put('/schroeder/users/:id', users.update)
 app.del('/schroeder/users/:id', users.destroy)
+
+
 
 
 db

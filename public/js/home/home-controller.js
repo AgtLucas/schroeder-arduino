@@ -1,5 +1,5 @@
 angular.module('schroederHome')
-  .controller('homeCtrl', ['$scope', '$window', '$timeout', 'User', function ($scope, $window, $timeout, User) {
+  .controller('homeCtrl', ['$scope', '$timeout', 'User', function ($scope, $timeout, User) {
 
     $scope.registrar = function(){
       User.save({ nome: $scope.nomeRegister, email: $scope.emailRegister, password: $scope.passwordRegister },
@@ -20,9 +20,5 @@ angular.module('schroederHome')
         }
       });
     };
-
-    $scope.sair = function(){
-      $window.location.href = "/logout";
-    }
 
   }]);
