@@ -125,7 +125,6 @@ if ('development' === app.get('env')) {
   app.use(errorHandler())
 }
 
-
 app.get('/schroeder/arduinos/:id', arduinos.find)
 app.post('/schroeder/arduinos', arduinos.create)
 app.get('/schroeder/create', arduinos.createGet)
@@ -136,9 +135,6 @@ app.get('/schroeder/users/:id', users.find)
 app.post('/schroeder/users', users.newUser)
 app.put('/schroeder/users/:id', users.update)
 app.del('/schroeder/users/:id', users.destroy)
-
-
-
 
 db
   .sequelize

@@ -26,7 +26,11 @@ exports.newUser = function(req, res) {
       db.User.create(usuario).success(function(entity) {
         res.statusCode = 201
         res.json(entity)
-      })
+      }).error(function(error, e){
+        console.log(error);
+        console.log("----------------------------------------------------");
+        console.log(e);
+      });
     }
   })
 }

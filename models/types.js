@@ -1,16 +1,10 @@
 module.exports = function(sequelize, DataTypes) {
   var Type = sequelize.define('Type', {
     nome: {
-      type: DataTypes.STRING,
-      validate: {
-        notNull: false,
-      },
+      type: DataTypes.STRING
     },
     codigo: {
-      type: DataTypes.STRING,
-      validate: {
-        notNull: false,
-      },
+      type: DataTypes.STRING
     }
   }, {
     classMethods: {
