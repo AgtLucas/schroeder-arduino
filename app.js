@@ -136,6 +136,7 @@ app.post('/schroeder/users', users.newUser)
 app.put('/schroeder/users/:id', users.update)
 app.del('/schroeder/users/:id', users.destroy)
 
+
 db
   .sequelize
   .sync()
