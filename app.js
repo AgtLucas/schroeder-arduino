@@ -103,7 +103,7 @@ app.get('/sensores', ensureAuthenticated, function(req, res){
   res.sendfile('public/views/arduino/arduinos.html', { user: req.user });
 });
 
-app.get('/schroeder/arduinos', ensureAuthenticated, arduinos.findAll);
+app.get('/schroeder/medicoes', arduinos.findAll);
 
 app.post('/schroeder/login',
   passport.authenticate('local', { failureRedirect: '/', failureFlash: true }),
