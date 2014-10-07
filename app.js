@@ -1,19 +1,12 @@
 var express        = require('express')
-  , app            = express();
-  app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    res.header("Access-Control-Allow-Headers", "Content-Type");
-    res.header("Access-Control-Allow-Methods", "PUT, GET, POST, DELETE, OPTIONS");
-    next();
-  });
-
-var cors           = require('cors')
+  , app            = express()
+  , http           = require('http').Server(app)
+  , io             = require('socket.io')(http, {origins:'mydomain.com:* http://mydomain.com:* http://www.mydomain.com:*'})
+  , cors           = require('cors')
   , bodyParser     = require('body-parser')
   , errorHandler   = require('errorhandler')
   , methodOverride = require('method-override')
   , morgan         = require('morgan')
-  , http           = require('http').Server(app)
   , path           = require('path')
   , db             = require('./models')
   , passport = require('passport')
@@ -160,7 +153,6 @@ db.sequelize.sync().complete(function(err) {
   } else {
     http.listen(app.get('port'), function(){
       console.log('Express server listening on port ' + app.get('port'))
-      io = require('socket.io')(http);
     });
   }
 })
