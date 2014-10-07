@@ -16,7 +16,7 @@ var express        = require('express')
   , users = require('./routes/user')
   , login = require('./routes/login')
 
-app.set('port', 3000)
+app.set('port', process.env.PORT || 3000)
 app.set('views', __dirname + '/public/views')
 app.use(morgan('dev'))
 app.use(bodyParser())
