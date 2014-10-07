@@ -155,5 +155,6 @@ db.sequelize.sync().complete(function(err) {
     });
     io = require('socket.io')(http, { origins: '*:*' });
     io.set( 'origins', '*schroeder-arduino.herokuapp.com:80' );
+    io.set( 'withCredentials', false);
   }
 })
