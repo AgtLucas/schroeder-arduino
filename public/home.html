@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en" ng-app="schroederHome">
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -10,26 +10,14 @@
     <title>Arduino</title>
     <link href="lib/bootstrap-css/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/app.css" rel="stylesheet">
-    <base href="/home">
   </head>
-  <body ng-controller="schroederCtrl">
+  <body>
    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
      <div class="container">
        <div class="navbar-header">
-         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-           <span class="sr-only">Toggle navigation</span>
-           <span class="icon-bar"></span>
-           <span class="icon-bar"></span>
-           <span class="icon-bar"></span>
-         </button>
-         <a class="navbar-brand" href="/home">{{dados.nome}}</a>
+         <a class="navbar-brand" href="/home">Sistema</a>
        </div>
        <div class="collapse navbar-collapse navbar-ex1-collapse">
-         <ul class="nav navbar-nav">
-           <li>
-              <a ng-href="/sensores">Sensores</a>
-           </li>
-         </ul>
          <ul class="nav navbar-nav navbar-right">
           <li class="dropdown">
             <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">Configurações <span class="caret"></span></a>
@@ -41,15 +29,11 @@
        </div>
      </div>
     </nav>
-    <div class="container ng-cloak" ng-controller="homeCtrl">
-      1
+    <div class="container ng-cloak">
+      <div ng-view></div>
     </div>
+    <script data-main="js/main.js" src="lib/require/require.js"></script>
     <script src="lib/jquery/dist/jquery.min.js"></script>
     <script src="lib/bootstrap-css/js/bootstrap.min.js"></script>
-    <script src="lib/angular/angular.min.js"></script>
-    <script src="lib/angular-resource/angular-resource.min.js"></script>
-    <script src="js/appHome.js"></script>
-    <script src="js/home/home-controller.js"></script>
-    <script src="js/home/home-service.js"></script>
   </body>
 </html>

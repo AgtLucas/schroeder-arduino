@@ -30,7 +30,7 @@ app.engine('ejs', require('ejs-locals'));
 app.use(express.logger());
 app.use(express.cookieParser());
 app.use(express.methodOverride());
-app.use(express.session({ secret: 'keyboard cat' }));
+app.use(express.session({ secret: 'schroeder-arduino' }));
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
@@ -88,7 +88,7 @@ app.get('/', function(req, res){
 });
 
 app.get('/home', ensureAuthenticated, function(req, res){
-  res.sendfile('public/views/home.html', { user: req.user });
+  res.sendfile('public/home.html', { user: req.user });
 });
 
 app.get('/schroeder/users/info',ensureAuthenticated, function(req, res){
