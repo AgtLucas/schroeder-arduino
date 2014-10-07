@@ -87,18 +87,18 @@ app.get('/', function(req, res){
   res.sendfile('public/index.html', { user: req.user, message: req.flash('error') });
 });
 
-app.get('/home', ensureAuthenticated, function(req, res){
+app.get('/home', naoAutenticadoHome, function(req, res){
   res.sendfile('public/home.html', { user: req.user });
 });
 
-app.get('/schroeder/users/info',ensureAuthenticated, function(req, res){
+app.get('/schroeder/users/info', naoAutenticado, function(req, res){
   var retorno = {
     nome: req.user.nome
   };
   res.json(retorno);
 });
 
-app.get('/sensores', ensureAuthenticated, function(req, res){
+app.get('/sensores', naoAutenticado, function(req, res){
   res.sendfile('public/views/arduino/arduinos.html', { user: req.user });
 });
 
@@ -115,10 +115,16 @@ app.get('/logout', function(req, res){
   res.redirect('/');
 });
 
-function ensureAuthenticated(req, res, next) {
+function naoAutenticado(req, res, next) {
   if (req.isAuthenticated()) { return next(); }
-  res.redirect('/')
+  res.send({ error: 1 });
 }
+
+function naoAutenticadoHome(req, res, next) {
+  if (req.isAuthenticated()) { return next(); }
+  res.redirect('/');
+}
+
 
 if ('development' === app.get('env')) {
   app.use(errorHandler())
