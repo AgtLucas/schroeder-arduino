@@ -16,14 +16,6 @@ var express        = require('express')
   , users = require('./routes/user')
   , login = require('./routes/login')
 
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "X-Requested-With");
-  res.header("Access-Control-Allow-Headers", "Content-Type");
-  res.header("Access-Control-Allow-Methods", "PUT, GET, POST, DELETE, OPTIONS");
-  next();
-});
-
 app.set('port', process.env.PORT || 3000)
 app.set('views', __dirname + '/public/views')
 app.use(morgan('dev'))
@@ -91,7 +83,7 @@ passport.use(new LocalStrategy(
   }
 ));
 
-app.get('/', function(req, res, next){
+app.get('/', function(req, res){
   res.sendfile('public/index.html', { user: req.user, message: req.flash('error') });
 });
 
@@ -159,7 +151,7 @@ db.sequelize.sync().complete(function(err) {
     throw err
   } else {
     http.listen(app.get('port'), function(){
-      console.log('Express server listening on port ' + app.get('port'));
+      console.log('Express server listening on port ' + app.get('port'))
       io = require('socket.io')(http, {log:false, origins:'*:*'});
     });
   }
