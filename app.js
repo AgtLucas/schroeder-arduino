@@ -155,5 +155,13 @@ db.sequelize.sync().complete(function(err) {
     });
 
     io = require('socket.io')(http);
+    io.set('origins','*');
+    io.set('transports', [
+      'websocket',
+      'flashsocket',
+      'htmlfile',
+      'xhr-polling',
+      'jsonp-polling'
+    ]);
   }
 })
