@@ -153,7 +153,7 @@ db.sequelize.sync().complete(function(err) {
     http.listen(app.get('port'), function(){
       console.log('Express server listening on port ' + app.get('port'))
     });
-    io = require('socket.io')(http).set('origins', '*:*').set('transports', [
+    io = require('socket.io')(http).set('origins', 'fabricioronchi.com').set('transports', [
       'websocket',
       'flashsocket',
       'htmlfile',
