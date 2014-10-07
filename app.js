@@ -1,12 +1,11 @@
 var express        = require('express')
   , app            = express()
-  , http           = require('http').Server(app)
-  , io             = require('socket.io')(http)
   , cors           = require('cors')
   , bodyParser     = require('body-parser')
   , errorHandler   = require('errorhandler')
   , methodOverride = require('method-override')
   , morgan         = require('morgan')
+  , http           = require('http').Server(app)
   , path           = require('path')
   , db             = require('./models')
   , passport = require('passport')
@@ -154,5 +153,6 @@ db.sequelize.sync().complete(function(err) {
     http.listen(app.get('port'), function(){
       console.log('Express server listening on port ' + app.get('port'))
     });
+    io = require('socket.io')(http);
   }
 })
