@@ -154,5 +154,6 @@ db.sequelize.sync().complete(function(err) {
       console.log('Express server listening on port ' + app.get('port'))
     });
     io = require('socket.io')(http, { origins: '*:*' });
+    io.set( 'origins', '*schroeder-arduino.herokuapp.com:80' );
   }
 })
