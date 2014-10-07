@@ -16,11 +16,6 @@ var express        = require('express')
   , users = require('./routes/user')
   , login = require('./routes/login')
 
-app.all('*', function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
 app.set('port', process.env.PORT || 3000)
 app.set('views', __dirname + '/public/views')
 app.use(morgan('dev'))
@@ -88,11 +83,11 @@ passport.use(new LocalStrategy(
   }
 ));
 
-app.get('/', function(req, res, next){
+app.get('/', function(req, res){
   res.sendfile('public/index.html', { user: req.user, message: req.flash('error') });
 });
 
-app.get('/home', ensureAuthenticated, function(req, res, next){
+app.get('/home', ensureAuthenticated, function(req, res){
   res.sendfile('public/views/home.html', { user: req.user });
 });
 
@@ -103,7 +98,7 @@ app.get('/schroeder/users/info',ensureAuthenticated, function(req, res){
   res.json(retorno);
 });
 
-app.get('/sensores', ensureAuthenticated, function(req, res, next){
+app.get('/sensores', ensureAuthenticated, function(req, res){
   res.sendfile('public/views/arduino/arduinos.html', { user: req.user });
 });
 
@@ -129,7 +124,7 @@ if ('development' === app.get('env')) {
   app.use(errorHandler())
 }
 
-app.get('/schroeder/create', function(req, res, next){
+app.get('/schroeder/create', function(req, res){
   arduinos.createGet(req, res);
   io.emit('new-medicao', {
     temperature: req.param('temperatura'),
