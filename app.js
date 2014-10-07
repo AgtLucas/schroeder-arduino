@@ -152,17 +152,7 @@ db.sequelize.sync().complete(function(err) {
   } else {
     http.listen(app.get('port'), function(){
       console.log('Express server listening on port ' + app.get('port'))
-      io = require('socket.io')(http);
-    io.set('origins','*');
-    io.set('transports', [
-      'websocket',
-      'flashsocket',
-      'htmlfile',
-      'xhr-polling',
-      'jsonp-polling'
-    ]);
+      io = require('socket.io')(http, { origins:'fabricioronchi.com:* http://fabricioronchi.com:* http://www.fabricioronchi.com:* fabricioronchi.com/arduino:* http://fabricioronchi.com/arduino:* http://www.fabricioronchi.com/arduino:*'});
     });
-
-
   }
 })
