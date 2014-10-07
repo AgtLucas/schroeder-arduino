@@ -1,7 +1,7 @@
 var express        = require('express')
   , app            = express()
   , http           = require('http').Server(app)
-  , io             = require('socket.io')(http, {origins:'schroeder-arduino.herokuapp.com:* http://schroeder-arduino.herokuapp.com:* http://schroeder-arduino.herokuapp.com:*'})
+  , io             = require('socket.io')(http)
   , cors           = require('cors')
   , bodyParser     = require('body-parser')
   , errorHandler   = require('errorhandler')
