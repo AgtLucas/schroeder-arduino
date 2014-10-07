@@ -153,8 +153,12 @@ db.sequelize.sync().complete(function(err) {
     http.listen(app.get('port'), function(){
       console.log('Express server listening on port ' + app.get('port'))
     });
-    io = require('socket.io')(http, { origins: '*:*' });
-    io.set( 'origins', '*schroeder-arduino.herokuapp.com:80' );
-    io.set( 'withCredentials', false);
+    io = require('socket.io')(http).set('origins', '*:*').set('transports', [
+      'websocket',
+      'flashsocket',
+      'htmlfile',
+      'xhr-polling',
+      'jsonp-polling'
+    ]);
   }
 })
