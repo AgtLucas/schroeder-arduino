@@ -156,5 +156,6 @@ db.sequelize.sync().complete(function(err) {
     io = require('socket.io')(http);
     io.set('transports', ['websocket', 'xhr-polling', 'jsonp-polling', 'htmlfile', 'flashsocket']);
     io.set('origins', '*:*');
+    io.set('credentials', false);
   }
 })
