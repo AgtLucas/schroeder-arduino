@@ -91,7 +91,7 @@ passport.use(new LocalStrategy(
   }
 ));
 
-app.get('/', function(req, res){
+app.get('/', function(req, res, next){
   res.sendfile('public/index.html', { user: req.user, message: req.flash('error') });
 });
 
@@ -159,7 +159,7 @@ db.sequelize.sync().complete(function(err) {
     throw err
   } else {
     http.listen(app.get('port'), function(){
-      console.log('Express server listening on port ' + app.get('port'))
+      console.log('Express server listening on port ' + app.get('port'));
       io = require('socket.io')(http, {log:false, origins:'*:*'});
     });
   }
