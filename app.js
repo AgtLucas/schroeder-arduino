@@ -136,8 +136,6 @@ app.get('/schroeder/create', function(req, res){
 
 app.get('/schroeder/arduinos/:id', arduinos.find)
 app.post('/schroeder/arduinos', arduinos.create)
-
-
 app.put('/schroeder/arduinos/:id', arduinos.update)
 app.del('/schroeder/arduinos/:id', arduinos.destroy)
 app.get('/schroeder/users', users.findAll)
