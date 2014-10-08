@@ -102,6 +102,10 @@ app.get('/sensores', naoAutenticado, function(req, res){
   res.sendfile('public/views/arduino/arduinos.html', { user: req.user });
 });
 
+app.get('/views/home/:page', naoAutenticadoPage, function(req, res){
+  res.sendfile('public/views/home/index.html', { user: req.user });
+});
+
 app.get('/schroeder/medicoes', arduinos.findAll);
 
 app.post('/schroeder/login',
@@ -125,6 +129,10 @@ function naoAutenticadoHome(req, res, next) {
   res.redirect('/');
 }
 
+function naoAutenticadoPage(req, res, next) {
+  if (req.isAuthenticated()) { return next(); }
+  res.redirect('/');
+}
 
 if ('development' === app.get('env')) {
   app.use(errorHandler())

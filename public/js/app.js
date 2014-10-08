@@ -3,32 +3,25 @@ define(['angularAMD', 'angular-route'], function (angularAMD) {
 
   app.config(function ($routeProvider, $locationProvider, $httpProvider) {
   	$locationProvider.html5Mode(true);
-   	$locationProvider.hashPrefix = '/';
+   	$locationProvider.hashPrefix = '!';
 
     $routeProvider.when("/home", angularAMD.route({
-    	templateUrl: 'views/home/index.html',
+    	templateUrl: '/views/home/' + Math.random(),
     	controller: 'home',
     	controllerUrl: 'js/home/controller'
     })).otherwise({redirectTo: "/home"});
+  });
 
-		var httpStatusInterceptor = function($window){
-    	function success(response){
-    		if(response.data.error == 1){
-    			return error(response);
-    		}
-        return response;
-      }
-      function error(response) {
-				return $window.location.href="/logout";
-      }
+  app.run(function($rootScope, $templateCache) {
+    $rootScope.$on('$viewContentLoaded', function() {
+      $templateCache.removeAll();
+    });
+  });
 
-     	return function(promise) {
-      	return promise.then(success, error);
-      }
-    }
-
-    $httpProvider.responseInterceptors.push(httpStatusInterceptor);
-
+  app.controller("homeCtrl", function($scope, $window){
+    $scope.sair = function(){
+      $window.location.href = "/logout";
+    };
   });
 
   return angularAMD.bootstrap(app);
