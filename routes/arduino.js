@@ -14,7 +14,7 @@ exports.findAllPager = function(req, res, next) {
 }
 
 exports.findLast = function(req, res, next) {
-  db.Arduino.findAll({ limit: 1 }).success(function(entity) {
+  db.Arduino.findAll({ limit: 1, order: 'id DESC'}).success(function(entity) {
     res.json(entity)
   })
 }
