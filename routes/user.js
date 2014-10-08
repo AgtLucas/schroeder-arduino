@@ -35,6 +35,7 @@ exports.newUser = function(req, res, next) {
 exports.update = function(req, res, next) {
   db.User.find({ where: { id: req.param('id') } }).success(function(entity) {
     if (entity) {
+      console.log(req.body);
       entity.updateAttributes(req.body).success(function(entity) {
         res.json(entity)
       })

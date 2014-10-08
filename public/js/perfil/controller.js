@@ -1,6 +1,5 @@
 define(['js/app'], function (app) {
   app.controller('perfil', function ($scope, $http) {
-
     angular.extend($scope, {
       dados: {}
     });
@@ -10,5 +9,12 @@ define(['js/app'], function (app) {
         dados: data
       });
     });
+
+    $scope.updateUser = function(){
+      $http.put('/schroeder/users/' + $scope.dados.id, $scope.dados).success(function(data, status, headers, config) {
+        alert("Salvo com sucesso!");
+      })
+    };
+
   });
 });

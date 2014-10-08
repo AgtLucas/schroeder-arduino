@@ -94,4 +94,4 @@ angular.module('schroeder', ['ngResource']).controller('schroederCtrl', ['$scope
   return $resource('schroeder/login/');
 }]).factory('User', ['$resource', function ($resource) {
   return $resource('schroeder/users/');
-}]);;
+}]);

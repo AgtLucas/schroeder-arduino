@@ -85,7 +85,9 @@ app.get('/home', naoAutenticadoHome, function(req, res, next){
 
 app.get('/schroeder/users/info', naoAutenticado, function(req, res, next){
   var retorno = {
-    nome: req.user.nome
+    id: req.user.id,
+    nome: req.user.nome,
+    email: req.user.email
   };
   res.json(retorno);
 });
@@ -138,6 +140,8 @@ if ('development' === app.get('env')) {
   app.use(errorHandler())
 }
 
+app.put('/schroeder/users/:id', naoAutenticado, users.update)
+
 app.get('/schroeder/create', function(req, res, next){
   arduinos.createGet(req, res);
   io.emit('new-medicao', {
@@ -148,14 +152,14 @@ app.get('/schroeder/create', function(req, res, next){
   });
 });
 
+app.post('/schroeder/users', users.newUser)
+
 app.get('/schroeder/arduinos/:id', arduinos.find)
 app.post('/schroeder/arduinos', arduinos.create)
 app.put('/schroeder/arduinos/:id', arduinos.update)
 app.del('/schroeder/arduinos/:id', arduinos.destroy)
-app.get('/schroeder/users', users.findAll)
-app.get('/schroeder/users/:id', users.find)
-app.post('/schroeder/users', users.newUser)
-app.put('/schroeder/users/:id', users.update)
+//app.get('/schroeder/users', users.findAll)
+//app.get('/schroeder/users/:id', users.find)
 app.del('/schroeder/users/:id', users.destroy)
 
 var io = null;
