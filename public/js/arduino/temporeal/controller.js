@@ -15,6 +15,7 @@ define(['js/app', 'socketIO'], function (app, socketIO) {
   			humidade: obj.humidity,
   			temperatura: obj.temperature
   		});
+  		$scope.$apply();
   	});
 
   	$scope.getData = function(data){
