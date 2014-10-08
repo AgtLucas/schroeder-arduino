@@ -162,16 +162,10 @@ app.post('/schroeder/users', users.newUser)
 app.put('/schroeder/users/:id', users.update)
 app.del('/schroeder/users/:id', users.destroy)
 
-var io;
 
-db.sequelize.sync().complete(function(err) {
-  if (err) {
-    throw err
-  } else {
-    http.listen(app.get('port'), function(){
-      console.log('Express server listening on port ' + app.get('port'))
-    });
-    io = require('socket.io')(http);
-  }
-})
+http.listen(app.get('port'), function(){
+  console.log('Express server listening on port ' + app.get('port'))
+});
+
+var io = require('socket.io')(http);
 
