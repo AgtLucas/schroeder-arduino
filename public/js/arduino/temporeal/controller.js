@@ -19,7 +19,7 @@ define(['js/app', 'socketIO'], function (app, socketIO) {
 
   	$scope.getData = function(data){
   		var _data = data.split("T")[0].split("-")[2] + "/" + data.split("T")[0].split("-")[1] + "/" + data.split("T")[0].split("-")[0];
-  		var _hora = teste.split("T")[1].split(":")[0] + ":" + teste.split("T")[1].split(":")[1];
+  		var _hora = data.split("T")[1].split(":")[0] + ":" + data.split("T")[1].split(":")[1];
   		return _hora + " " + _data;
   	};
 
