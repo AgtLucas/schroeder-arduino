@@ -9,6 +9,14 @@ define(['js/app', 'socketIO'], function (app, socketIO) {
   		temperatura: "0"
   	});
 
+    $http.get('/schroeder/medicoes/last').success(function(obj) {
+      angular.extend($scope, {
+        data: $scope.getData(obj[0].createdAt),
+        humidade: obj[0].humidity,
+        temperatura: obj[0].temperature
+      });
+    });
+
   	socket.on('new-medicao', function(obj){
     	angular.extend($scope, {
   			data: $scope.getData(obj.createdAt),
@@ -24,6 +32,5 @@ define(['js/app', 'socketIO'], function (app, socketIO) {
   		return _hora + " " + _data;
   	};
 
-	  });
-
+	 });
 });
