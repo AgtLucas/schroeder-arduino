@@ -1,11 +1,11 @@
 var express        = require('express')
   , app            = express()
+  , http           = require('http').Server(app)
   , cors           = require('cors')
   , bodyParser     = require('body-parser')
   , errorHandler   = require('errorhandler')
   , methodOverride = require('method-override')
   , morgan         = require('morgan')
-  , http           = require('http').Server(app)
   , path           = require('path')
   , db             = require('./models')
   , passport = require('passport')
@@ -162,15 +162,11 @@ app.post('/schroeder/users', users.newUser)
 app.put('/schroeder/users/:id', users.update)
 app.del('/schroeder/users/:id', users.destroy)
 
-var io;
 
-db.sequelize.sync().complete(function(err) {
-  if (err) {
-    throw err
-  } else {
-    http.listen(app.get('port'), function(){
-      console.log('Express server listening on port ' + app.get('port'))
-    });
-    io = require('socket.io')(http);
-  }
-})
+
+http.listen(app.get('port'), function(){
+  console.log('Express server listening on port ' + app.get('port'))
+});
+
+var io = require('socket.io')(http);
+
