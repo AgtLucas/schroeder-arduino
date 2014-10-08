@@ -1,19 +1,19 @@
 var db = require('../models')
 
-exports.findAll = function(req, res) {
+exports.findAll = function(req, res, next) {
   db.Arduino.findAll().success(function(entities) {
     res.json(entities)
   })
 }
 
-exports.findAllPager = function(req, res) {
+exports.findAllPager = function(req, res, next) {
   db.Arduino.findAll({ offset:3, limit: 1 }).success(function(entities) {
     retorno.dados = entities;
     res.json(retorno)
   })
 }
 
-exports.find = function(req, res) {
+exports.find = function(req, res, next) {
   db.Arduino.find({ where: { id: req.param('id') } }).success(function(entity) {
     if (entity) {
       res.json(entity)
@@ -23,14 +23,14 @@ exports.find = function(req, res) {
   })
 }
 
-exports.create = function(req, res) {
+exports.create = function(req, res, next) {
   db.Arduino.create(req.body).success(function(entity) {
     res.statusCode = 201
     res.json(entity)
   })
 }
 
-exports.createGet = function(req, res) {
+exports.createGet = function(req, res, next) {
   var medida = {
     id: "",
     temperature: req.param('temperatura'),
@@ -44,7 +44,7 @@ exports.createGet = function(req, res) {
   })
 }
 
-exports.update = function(req, res) {
+exports.update = function(req, res, next) {
   db.Arduino.find({ where: { id: req.param('id') } }).success(function(entity) {
     if (entity) {
       entity.updateAttributes(req.body).success(function(entity) {
@@ -56,7 +56,7 @@ exports.update = function(req, res) {
   })
 }
 
-exports.destroy = function(req, res) {
+exports.destroy = function(req, res, next) {
   db.Arduino.find({ where: { id: req.param('id') } }).success(function(entity) {
     if (entity) {
       entity.destroy().success(function() {

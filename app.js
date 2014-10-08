@@ -18,12 +18,6 @@ app.set('port', process.env.PORT || 3000)
 app.use(bodyParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
-app.all('*', function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
-
 app.configure(function() {
   app.use(express.logger());
   app.use(express.cookieParser());
@@ -81,42 +75,46 @@ passport.use(new LocalStrategy(
   }
 ));
 
-app.get('/', function(req, res){
+app.get('/', function(req, res, next){
   res.sendfile('public/index.html', { user: req.user, message: req.flash('error') });
 });
 
-app.get('/home', naoAutenticadoHome, function(req, res){
+app.get('/home', naoAutenticadoHome, function(req, res, next){
   res.sendfile('public/home.html', { user: req.user });
 });
 
-app.get('/schroeder/users/info', naoAutenticado, function(req, res){
+app.get('/schroeder/users/info', naoAutenticado, function(req, res, next){
   var retorno = {
     nome: req.user.nome
   };
   res.json(retorno);
 });
 
-app.get('/views/perfil/:page', naoAutenticadoPage, function(req, res){
+app.get('/views/perfil/:page', naoAutenticadoPage, function(req, res, next){
   res.sendfile('public/views/perfil/index.html', { user: req.user });
 });
 
-app.get('/views/home/:page', naoAutenticadoPage, function(req, res){
+app.get('/views/home/:page', naoAutenticadoPage, function(req, res, next){
   res.sendfile('public/views/home/index.html', { user: req.user });
 });
 
-app.get('/views/arduino/temporeal/:page', naoAutenticadoPage, function(req, res){
+app.get('/views/arduino/temporeal/:page', naoAutenticadoPage, function(req, res, next){
   res.sendfile('public/views/arduino/temporeal/index.html', { user: req.user });
 });
 
-app.get('/schroeder/medicoes', arduinos.findAll);
+app.get('/schroeder/medicoes', function(req, res, next){
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  arduinos.findAll(req, res, next);
+});
 
 app.post('/schroeder/login',
   passport.authenticate('local', { failureRedirect: '/', failureFlash: true }),
-  function(req, res) {
+  function(req, res, next) {
     res.json({ success: 1})
   });
 
-app.get('/logout', function(req, res){
+app.get('/logout', function(req, res, next){
   req.logout();
   res.redirect('/');
 });
@@ -140,7 +138,7 @@ if ('development' === app.get('env')) {
   app.use(errorHandler())
 }
 
-app.get('/schroeder/create', function(req, res){
+app.get('/schroeder/create', function(req, res, next){
   arduinos.createGet(req, res);
   io.emit('new-medicao', {
     temperature: req.param('temperatura'),

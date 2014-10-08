@@ -1,12 +1,12 @@
 var db = require('../models')
 
-exports.findAll = function(req, res) {
+exports.findAll = function(req, res, next) {
   db.User.findAll().success(function(entities) {
     res.json(entities)
   })
 }
 
-exports.find = function(req, res) {
+exports.find = function(req, res, next) {
   db.User.find({ where: { id: req.param('id') } }).success(function(entity) {
     if (entity) {
       res.json(entity)
@@ -16,7 +16,7 @@ exports.find = function(req, res) {
   })
 }
 
-exports.newUser = function(req, res) {
+exports.newUser = function(req, res, next) {
   db.User.find({ where: { email: req.body.email } }).success(function(entity) {
     if (entity) {
       res.json({ error: "Usuário já cadastrado!"})
@@ -27,15 +27,12 @@ exports.newUser = function(req, res) {
         res.statusCode = 201
         res.json(entity)
       }).error(function(error, e){
-        console.log(error);
-        console.log("----------------------------------------------------");
-        console.log(e);
       });
     }
   })
 }
 
-exports.update = function(req, res) {
+exports.update = function(req, res, next) {
   db.User.find({ where: { id: req.param('id') } }).success(function(entity) {
     if (entity) {
       entity.updateAttributes(req.body).success(function(entity) {
@@ -47,7 +44,7 @@ exports.update = function(req, res) {
   })
 }
 
-exports.destroy = function(req, res) {
+exports.destroy = function(req, res, next) {
   db.User.find({ where: { id: req.param('id') } }).success(function(entity) {
     if (entity) {
       entity.destroy().success(function() {
