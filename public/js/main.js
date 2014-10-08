@@ -10,5 +10,5 @@ require.config({
     'angularAMD': ['angular'],
     'angular-route': ['angular']
   },
-  deps: ['js/app']
+  deps: ['js/app', 'socketIO']
 });
