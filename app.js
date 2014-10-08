@@ -1,11 +1,9 @@
 var express        = require('express')
   , app            = express()
   , http           = require('http').Server(app)
-  , cors           = require('cors')
   , bodyParser     = require('body-parser')
   , errorHandler   = require('errorhandler')
   , methodOverride = require('method-override')
-  , morgan         = require('morgan')
   , path           = require('path')
   , db             = require('./models')
   , passport = require('passport')
@@ -17,24 +15,18 @@ var express        = require('express')
   , login = require('./routes/login')
 
 app.set('port', process.env.PORT || 3000)
-app.set('views', __dirname + '/public/views')
-app.use(morgan('dev'))
 app.use(bodyParser())
-app.use(methodOverride())
-app.use(cors())
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.configure(function() {
-app.set('view engine', 'ejs');
-app.engine('ejs', require('ejs-locals'));
-app.use(express.logger());
-app.use(express.cookieParser());
-app.use(express.methodOverride());
-app.use(express.session({ secret: 'schroeder-arduino' }));
-app.use(flash());
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(app.router);
+  app.use(express.logger());
+  app.use(express.cookieParser());
+  app.use(express.methodOverride());
+  app.use(express.session({ secret: 'schroeder-arduino' }));
+  app.use(flash());
+  app.use(passport.initialize());
+  app.use(passport.session());
+  app.use(app.router);
 });
 
 function findById(id, fn) {
