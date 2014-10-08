@@ -98,12 +98,16 @@ app.get('/schroeder/users/info', naoAutenticado, function(req, res){
   res.json(retorno);
 });
 
-app.get('/sensores', naoAutenticado, function(req, res){
-  res.sendfile('public/views/arduino/arduinos.html', { user: req.user });
+app.get('/views/perfil/:page', naoAutenticadoPage, function(req, res){
+  res.sendfile('public/views/perfil/index.html', { user: req.user });
 });
 
 app.get('/views/home/:page', naoAutenticadoPage, function(req, res){
   res.sendfile('public/views/home/index.html', { user: req.user });
+});
+
+app.get('/views/arduino/temporeal/:page', naoAutenticadoPage, function(req, res){
+  res.sendfile('public/views/arduino/temporeal/index.html', { user: req.user });
 });
 
 app.get('/schroeder/medicoes', arduinos.findAll);

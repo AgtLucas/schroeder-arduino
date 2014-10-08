@@ -6,9 +6,17 @@ define(['angularAMD', 'angular-route'], function (angularAMD) {
    	$locationProvider.hashPrefix = '!';
 
     $routeProvider.when("/home", angularAMD.route({
-    	templateUrl: '/views/home/' + Math.random(),
-    	controller: 'home',
-    	controllerUrl: 'js/home/controller'
+      templateUrl: '/views/home/' + Math.random(),
+      controller: 'home',
+      controllerUrl: 'js/home/controller'
+    })).when("/meus-dados", angularAMD.route({
+      templateUrl: '/views/perfil/' + Math.random(),
+      controller: 'perfil',
+      controllerUrl: 'js/perfil/controller'
+    })).when("/tempo-real", angularAMD.route({
+      templateUrl: '/views/arduino/temporeal/' + Math.random(),
+      controller: 'tempoReal',
+      controllerUrl: 'js/arduino/temporeal/controller'
     })).otherwise({redirectTo: "/home"});
   });
 
