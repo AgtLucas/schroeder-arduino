@@ -18,6 +18,12 @@ app.set('port', process.env.PORT || 3000)
 app.use(bodyParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
+app.all('*', function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 app.configure(function() {
   app.use(express.logger());
   app.use(express.cookieParser());
