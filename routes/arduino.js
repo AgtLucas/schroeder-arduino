@@ -13,6 +13,12 @@ exports.findAllPager = function(req, res, next) {
   })
 }
 
+exports.findLast = function(req, res, next) {
+  db.Arduino.findAll({ limit: 1 }).success(function(entity) {
+    res.json(entity)
+  })
+}
+
 exports.find = function(req, res, next) {
   db.Arduino.find({ where: { id: req.param('id') } }).success(function(entity) {
     if (entity) {

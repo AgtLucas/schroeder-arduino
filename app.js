@@ -110,6 +110,8 @@ app.get('/schroeder/medicoes', function(req, res, next){
   arduinos.findAll(req, res, next);
 });
 
+app.get('/schroeder/medicoes/last', naoAutenticado, arduinos.findLast)
+
 app.post('/schroeder/login',
   passport.authenticate('local', { failureRedirect: '/', failureFlash: true }),
   function(req, res, next) {
@@ -140,6 +142,9 @@ if ('development' === app.get('env')) {
   app.use(errorHandler())
 }
 
+
+app.put('/schroeder/arduinos/:id', arduinos.update)
+
 app.put('/schroeder/users/:id', naoAutenticado, users.update)
 
 app.get('/schroeder/create', function(req, res, next){
@@ -155,8 +160,9 @@ app.get('/schroeder/create', function(req, res, next){
 app.post('/schroeder/users', users.newUser)
 
 app.get('/schroeder/arduinos/:id', arduinos.find)
+
+
 app.post('/schroeder/arduinos', arduinos.create)
-app.put('/schroeder/arduinos/:id', arduinos.update)
 app.del('/schroeder/arduinos/:id', arduinos.destroy)
 //app.get('/schroeder/users', users.findAll)
 //app.get('/schroeder/users/:id', users.find)
