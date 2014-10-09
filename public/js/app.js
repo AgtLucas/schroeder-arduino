@@ -46,10 +46,16 @@ define(['angularAMD', 'angular-route'], function (angularAMD) {
         if(response.data.error == 1){
           return error(response);
         }
+        if(response.data.error == 2){
+          return info(response);
+        }
         return response;
       }
       function error(response) {
         return window.swal("Ops! Ocorreu algum erro.","","error", "<i class='glyphicon glyphicon-log-out'></i>&nbsp;&nbsp;Fechar", 1);
+      }
+      function info(response) {
+        return window.swal(response.data.message,"","error", "<i class='glyphicon glyphicon-ok'></i>&nbsp;&nbsp;Ok", 0);
       }
       return function(promise) {
         return promise.then(success, error);

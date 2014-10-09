@@ -12,7 +12,7 @@ define(['js/app'], function (app) {
 
     $scope.updateUser = function(){
       $http.put('/schroeder/users/' + $scope.dados.id, $scope.dados).success(function(data, status, headers, config) {
-        SweetAlert.success(data.message, "");
+        SweetAlert.success(data.message, "", "<i class='glyphicon glyphicon-ok'></i>&nbsp;&nbsp;Ok");
       })
     };
 
