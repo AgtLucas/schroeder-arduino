@@ -136,7 +136,9 @@ function naoAutenticadoHome(req, res, next) {
 
 function naoAutenticadoPage(req, res, next) {
   if (req.isAuthenticated()) { return next(); }
-  res.redirect('/');
+  res.send({ error: 1 });
+  //Caso volte a página principal
+  //res.redirect('/');
 }
 
 if ('development' === app.get('env')) {
