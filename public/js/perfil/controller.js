@@ -1,5 +1,5 @@
 define(['js/app'], function (app) {
-  app.controller('perfil', function ($scope, $http) {
+  app.controller('perfil', function ($scope, $http, SweetAlert) {
     angular.extend($scope, {
       dados: {}
     });
@@ -12,7 +12,7 @@ define(['js/app'], function (app) {
 
     $scope.updateUser = function(){
       $http.put('/schroeder/users/' + $scope.dados.id, $scope.dados).success(function(data, status, headers, config) {
-        alert("Salvo com sucesso!");
+        SweetAlert.error(data.message, "");
       })
     };
 

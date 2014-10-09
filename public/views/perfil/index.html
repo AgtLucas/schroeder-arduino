@@ -23,6 +23,15 @@
 	</div>
 	<div class="row ng-cloak">
 		<div class="col-sm-5">
+			<div class="form-group" ng-class="{'has-error': userForm.senha.$invalid && !userForm.senha.$pristine }">
+				<label>Senha</label>
+        <input type="password" name="senha" class="form-control" ng-model="dados.password" required>
+        <p ng-show="userForm.senha.$invalid && !userForm.senha.$pristine" class="help-block">Senha inválida!</p>
+      </div>
+		</div>
+	</div>
+	<div class="row ng-cloak">
+		<div class="col-sm-5">
 	 		<div class="form-group">
 	    	<button type="button" class="btn btn-success" ng-disabled="userForm.$invalid" ng-click="updateUser()">
 	    		<i class="glyphicon glyphicon-ok"></i>&nbsp;&nbsp;Salvar

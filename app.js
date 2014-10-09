@@ -87,7 +87,8 @@ app.get('/schroeder/users/info', naoAutenticado, function(req, res, next){
   var retorno = {
     id: req.user.id,
     nome: req.user.nome,
-    email: req.user.email
+    email: req.user.email,
+    password: req.user.password
   };
   res.json(retorno);
 });

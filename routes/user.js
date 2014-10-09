@@ -35,10 +35,15 @@ exports.newUser = function(req, res, next) {
 exports.update = function(req, res, next) {
   db.User.find({ where: { id: req.param('id') } }).success(function(entity) {
     if (entity) {
-      console.log(req.body);
-      entity.updateAttributes(req.body).success(function(entity) {
-        res.json(entity)
-      })
+      db.User.find({ where: { email: req.body.email } }).success(function(entity) {
+        if (entity && entity.id != req.param('id')) {
+          res.send({ error: 2, message: "Usuário já cadastrado!" })
+        }else{
+          entity.updateAttributes(req.body).success(function(entity) {
+            res.json({ error: 0, message: "Salvo com sucesso!" })
+          })
+        }
+      });
     } else {
       res.send(404)
     }
