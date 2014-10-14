@@ -164,7 +164,6 @@ app.post('/schroeder/users', users.newUser)
 
 app.get('/schroeder/arduinos/:id', arduinos.find)
 
-
 app.post('/schroeder/arduinos', arduinos.create)
 app.del('/schroeder/arduinos/:id', arduinos.destroy)
 //app.get('/schroeder/users', users.findAll)
@@ -177,7 +176,6 @@ db.sequelize.sync().complete(function(err) {
   if (err) {
     throw err
   } else {
-    db.sequelize.drop();
     http.listen(app.get('port'), function(){
       console.log('Express server listening on port ' + app.get('port'))
     });
