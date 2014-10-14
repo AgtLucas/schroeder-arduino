@@ -43,7 +43,7 @@ exports.update = function(req, res, next) {
 }
 
 exports.destroy = function(req, res, next) {
-  db.Log.find({ where: { id: req.param('id') } }).success(function(entity) {
+  db.Log.find({ where: { ClientId: req.param('id') } }).success(function(entity) {
     if (entity) {
       entity.destroy().success(function() {
         res.send(204)

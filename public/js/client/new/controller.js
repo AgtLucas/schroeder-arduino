@@ -5,6 +5,10 @@ define(['js/app'], function (app) {
       dados: {}
     });
 
+    $scope.upper = function() {
+      $scope.dados.password = angular.uppercase($scope.dados.password);
+    };
+
     $scope.saveClient = function(){
       $http.post('/schroeder/clients/', $scope.dados).success(function(data, status, headers, config) {
         SweetAlert.success(data.message, "", "<i class='glyphicon glyphicon-ok'></i>&nbsp;&nbsp;Ok");
