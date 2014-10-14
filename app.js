@@ -185,7 +185,7 @@ app.del('/schroeder/clients/:id', client.destroy)
 
 var io = null;
 
-db.sequelize.sync({ force: true }).complete(function(err) {
+db.sequelize.sync({ force: false }).complete(function(err) {
   if (err) {
     throw err
   } else {
