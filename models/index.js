@@ -20,6 +20,12 @@ var fs        = require('fs')
     });
   }
 
+var Client   = sequelize.import(__dirname + "/client")
+  , Log      = sequelize.import(__dirname + "/log")
+
+Client.hasMany(Log)
+Log.belongsTo(Client)
+
 fs
   .readdirSync(__dirname)
   .filter(function(file) {
@@ -31,8 +37,9 @@ fs
   })
 
 Object.keys(db).forEach(function(modelName) {
-  if (db[modelName].options.hasOwnProperty('associate')) {
-    db[modelName].options.associate(db)
+  console.log(db[modelName].associate);
+  if (db[modelName].associate != undefined) {
+    db[modelName].associate(db)
   }
 })
 

@@ -1,18 +1,15 @@
 module.exports = function(sequelize, DataTypes) {
-  var Client = sequelize.define('Client', {
-    nome: {
-      type: DataTypes.STRING
-    },
-    password: {
+  var Log = sequelize.define('Log', {
+    descricao: {
       type: DataTypes.STRING
     }
   }, {
     classMethods: {
       associate: function(models) {
-        Client.hasMany(models.Log)
+        Log.belongsTo(models.Client)
       }
     }
   })
 
-  return Client
+  return Log
 }
