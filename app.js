@@ -13,6 +13,7 @@ var express        = require('express')
   , types = require('./routes/type')
   , users = require('./routes/user')
   , login = require('./routes/login')
+  , client = require('./routes/client')
 
 app.set('port', process.env.PORT || 3000)
 app.use(bodyParser())
@@ -105,6 +106,14 @@ app.get('/views/arduino/temporeal/:page', naoAutenticadoPage, function(req, res,
   res.sendfile('public/views/arduino/temporeal/index.html', { user: req.user });
 });
 
+app.get('/views/client/:page', naoAutenticadoPage, function(req, res, next){
+  res.sendfile('public/views/client/index.html', { user: req.user });
+});
+
+app.get('/views/client/new/:page', naoAutenticadoPage, function(req, res, next){
+  res.sendfile('public/views/client/new/index.html', { user: req.user });
+});
+
 app.get('/schroeder/medicoes', function(req, res, next){
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -112,6 +121,8 @@ app.get('/schroeder/medicoes', function(req, res, next){
 });
 
 app.get('/schroeder/medicoes/last', naoAutenticado, arduinos.findLast)
+
+app.get('/schroeder/clients', naoAutenticado, client.findAll)
 
 app.post('/schroeder/login',
   passport.authenticate('local', { failureRedirect: '/', failureFlash: true }),
@@ -145,11 +156,8 @@ if ('development' === app.get('env')) {
   app.use(errorHandler())
 }
 
-
 app.put('/schroeder/arduinos/:id', arduinos.update)
-
 app.put('/schroeder/users/:id', naoAutenticado, users.update)
-
 app.get('/schroeder/create', function(req, res, next){
   arduinos.createGet(req, res);
   io.emit('new-medicao', {
@@ -161,14 +169,15 @@ app.get('/schroeder/create', function(req, res, next){
 });
 
 app.post('/schroeder/users', users.newUser)
-
+app.post('/schroeder/clients', client.newClient)
 app.get('/schroeder/arduinos/:id', arduinos.find)
-
 app.post('/schroeder/arduinos', arduinos.create)
 app.del('/schroeder/arduinos/:id', arduinos.destroy)
-//app.get('/schroeder/users', users.findAll)
-//app.get('/schroeder/users/:id', users.find)
 app.del('/schroeder/users/:id', users.destroy)
+
+app.del('/schroeder/clients/:id', client.destroy)
+
+//app.get('/schroeder/users/:id', users.find)
 
 var io = null;
 

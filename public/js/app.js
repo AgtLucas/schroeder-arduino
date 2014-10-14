@@ -39,6 +39,14 @@ define(['angularAMD', 'angular-route'], function (angularAMD) {
       templateUrl: '/views/arduino/temporeal/' + Math.random(),
       controller: 'tempoReal',
       controllerUrl: 'js/arduino/temporeal/controller'
+    })).when("/new-client", angularAMD.route({
+      templateUrl: '/views/client/new/' + Math.random(),
+      controller: 'new-client',
+      controllerUrl: 'js/client/new/controller'
+    })).when("/client", angularAMD.route({
+      templateUrl: '/views/client/' + Math.random(),
+      controller: 'client',
+      controllerUrl: 'js/client/controller'
     })).otherwise({redirectTo: "/home"});
 
     var httpStatusInterceptor = function($window){
