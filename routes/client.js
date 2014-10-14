@@ -49,13 +49,39 @@ exports.update = function(req, res, next) {
 }
 
 exports.destroy = function(req, res, next) {
-  db.Client.find({ where: { id: req.param('id') } }).success(function(entity) {
-    if (entity) {
-      entity.destroy().success(function() {
-        res.send(204)
+  var passou = 0;
+  db.Log.findAll({ where: { ClientId: req.param('id') } }).success(function(data) {
+    if(data.length > 0){
+      for(var i = 0; i < data.length; i++){
+        db.Log.find({ where: { id: data[i].id } }).success(function(entity) {
+          if (entity) {
+            entity.destroy().success(function() {
+              if(i == data.length && passou == 0){
+                passou = 1;
+                db.Client.find({ where: { id: req.param('id') } }).success(function(entityClient) {
+                  if (entityClient) {
+                    entityClient.destroy().success(function() {
+                      res.send(204)
+                    })
+                  } else {
+                    res.send(404)
+                  }
+                })
+              }
+            })
+          }
+        });
+      }
+    }else{
+      db.Client.find({ where: { id: req.param('id') } }).success(function(entityClient) {
+        if (entityClient) {
+          entityClient.destroy().success(function() {
+            res.send(204)
+          })
+        } else {
+          res.send(404)
+        }
       })
-    } else {
-      res.send(404)
     }
   })
 }
