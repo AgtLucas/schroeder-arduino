@@ -107,6 +107,10 @@ app.get('/views/arduino/temporeal/:page', naoAutenticadoPage, function(req, res,
   res.sendfile('public/views/arduino/temporeal/index.html', { user: req.user });
 });
 
+app.get('/views/log/:page', naoAutenticadoPage, function(req, res, next){
+  res.sendfile('public/views/log/index.html', { user: req.user });
+});
+
 app.get('/views/client/:page', naoAutenticadoPage, function(req, res, next){
   res.sendfile('public/views/client/index.html', { user: req.user });
 });
