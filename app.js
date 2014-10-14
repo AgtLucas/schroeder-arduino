@@ -177,6 +177,7 @@ db.sequelize.sync().complete(function(err) {
   if (err) {
     throw err
   } else {
+    db.sequelize.drop();
     http.listen(app.get('port'), function(){
       console.log('Express server listening on port ' + app.get('port'))
     });
