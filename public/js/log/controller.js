@@ -3,14 +3,15 @@ define(['js/app', 'socketIO'], function (app, socketIO) {
 
   	var socket = socketIO();
 
-    $http.get('/schroeder/medicoes/last').success(function(data) {
+    $http.get('/schroeder/logs/').success(function(data) {
       angular.extend($scope, {
         dados: data
       });
     });
 
-  	socket.on('new-log', function(obj){
-    	$scope.dados.push(obj);
+  	socket.on('new-log', function(objLog, objUser){
+      objLog.Client = objUser;
+    	$scope.dados.push(objLog);
   		$scope.$apply();
   	});
 
@@ -19,7 +20,7 @@ define(['js/app', 'socketIO'], function (app, socketIO) {
   		return _data;
   	};
 
-    $scope.getHota = function(data){
+    $scope.getHora = function(data){
       var _hora = data.split("T")[1].split(":")[0] + ":" + data.split("T")[1].split(":")[1];
       return _hora;
     };

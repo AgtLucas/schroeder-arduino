@@ -15,11 +15,11 @@
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="obj in dados">
-          <td style="width: 250px"></td>
-          <td></td>
-          <td style="width: 200px" class="text-center"></td>
-          <td style="width: 100px" class="text-center"></td>
+        <tr ng-repeat="obj in dados | orderBy:'-id'">
+          <td style="width: 250px">{{obj.Client.nome}}</td>
+          <td>{{obj.descricao}}</td>
+          <td style="width: 200px" class="text-center">{{getData(obj.createdAt)}}</td>
+          <td style="width: 100px" class="text-center">{{getHora(obj.createdAt)}}</td>
         </tr>
       </tbody>
     </table>

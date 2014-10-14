@@ -1,7 +1,7 @@
 var db = require('../models')
 
 exports.findAll = function(req, res, next) {
-  db.Log.findAll({ include: [ db.Client ] }).success(function(entities) {
+  db.Log.findAll({ include: [ db.Client ], limit: 100 }).success(function(entities) {
     res.json(entities)
   })
 }

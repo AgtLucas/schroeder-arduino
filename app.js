@@ -175,6 +175,22 @@ app.get('/schroeder/create', function(req, res, next){
   });
 });
 
+app.get('/schroeder/autenticar/:password', function(req, res, next){
+  db.Client.find({ where: { password: req.param('password') } }).success(function(entityUser) {
+    if (entityUser) {
+      var _log = { ClientId: entityUser.id, descricao: req.param('acao') };
+      db.Log.create(_log).success(function(entityLog) {
+        io.emit('new-log', entityLog, entityUser);
+        res.send('1');
+      }).error(function(error, e){
+        res.send('0');
+      });
+    } else {
+      res.send('0');
+    }
+  });
+});
+
 app.post('/schroeder/users', users.newUser)
 app.post('/schroeder/logs', log.newLog)
 app.post('/schroeder/clients', client.newClient)
@@ -182,7 +198,6 @@ app.get('/schroeder/arduinos/:id', arduinos.find)
 app.post('/schroeder/arduinos', arduinos.create)
 app.del('/schroeder/arduinos/:id', arduinos.destroy)
 app.del('/schroeder/users/:id', users.destroy)
-
 app.del('/schroeder/clients/:id', client.destroy)
 
 //app.get('/schroeder/users/', users.findAll)
