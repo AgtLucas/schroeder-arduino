@@ -17,11 +17,15 @@ function iniciar(){
 
   xmlhttp.onreadystatechange = function() {
     if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-      console.log(xmlhttp.responseText);
+      if(xmlhttp.responseText == "0"){
+
+      }
     }
   }
 
-  xmlhttp.open("GET", "http://schroeder-arduino.herokuapp.com/schroeder/autenticar/S?acao=Entrou%20no%20escrit%C3%B3rio", true);
+  var url = "http://schroeder-arduino.herokuapp.com/schroeder/autenticar/" + document.getElementById("password").value;
+  url = url + "?acao=Entrou%20no%20escrit%C3%B3rio";
+  xmlhttp.open("GET", url, true);
   xmlhttp.send();
 
 }
