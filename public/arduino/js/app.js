@@ -1,3 +1,12 @@
+var app = angular.extend("app", []);
+
+app.controller("controller", function($scope){
+  alert();
+  angular.extend($scope, {
+    teste: "Fabricio"
+  });
+});
+
 function iniciar(){
   var estado = document.getElementById("estado").innerHTML;
   if(estado === "0"){
