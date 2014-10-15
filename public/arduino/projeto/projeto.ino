@@ -76,8 +76,8 @@ void loop(){
 
           client.println("<div class='col-lg-4 text-center'>");          
           client.println("<h1>Buzzer</h1>");          
-          client.println("<a class='btn btn-lg btn-success' href='/?ligar' id='ligarrele' style='display: none'><i class='glyphicon glyphicon-thumbs-up'></i>&nbsp;&nbsp;Ligar</a>");
-          client.println("<a class='btn btn-lg btn-danger' href='/?desligar' onclick=\"acao('/?desligar','Desligou o buzzer.')\" id='desligarrele' style='display: '><i class='glyphicon glyphicon-off'></i>&nbsp;&nbsp;Desligar</a>");         
+          client.println("<a class='btn btn-lg btn-success' href='/?ligar' id='ligarbuzzer' style='display: none'><i class='glyphicon glyphicon-thumbs-up'></i>&nbsp;&nbsp;Ligar</a>");
+          client.println("<a class='btn btn-lg btn-danger' href='javascript:acao(\"/?desligar\")' id='desligarbuzzer' style='display: none'><i class='glyphicon glyphicon-off'></i>&nbsp;&nbsp;Desligar</a>");         
           client.println("</div>");          
           
           client.println("<div class='col-lg-4 text-center'>");          

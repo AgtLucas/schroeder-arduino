@@ -34,7 +34,10 @@ function iniciar(){
 
 }
 
-function acao(acao, descricao){
-  alert(descricao);
-  window.location.href = acao;
+function buzzer(acao){
+  if(acao == 1){
+    window.location.href = "/?ligar";
+  }else{
+    window.location.href = "/?desligar";
+  }
 };
