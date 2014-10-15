@@ -6,5 +6,5 @@ function iniciar(){
   } else {
       document.getElementById("estado").innerHTML="0";
       document.getElementById("ligarrele").style.display = "";
-  }*/
+  }
 }
