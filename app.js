@@ -95,6 +95,10 @@ app.get('/schroeder/users/info', naoAutenticado, function(req, res, next){
   res.json(retorno);
 });
 
+app.get('/arduino', naoAutenticadoPage, function(req, res, next){
+  res.redirect('http://fabricioronchi.com');
+});
+
 app.get('/views/perfil/:page', naoAutenticadoPage, function(req, res, next){
   res.sendfile('public/views/perfil/index.html', { user: req.user });
 });
@@ -104,7 +108,7 @@ app.get('/views/home/:page', naoAutenticadoPage, function(req, res, next){
 });
 
 app.get('/views/arduino/temporeal/:page', naoAutenticadoPage, function(req, res, next){
-  res.redirect('http://google.com');
+  res.sendfile('public/views/arduino/temporeal/index.html', { user: req.user });
 });
 
 app.get('/views/arduino/sensores/:page', naoAutenticadoPage, function(req, res, next){
