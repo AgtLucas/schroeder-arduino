@@ -1,10 +1,12 @@
 var app = angular.module("app", []);
 
 app.controller("controller", function($scope){
-  alert();
   angular.extend($scope, {
-    teste: "Fabricio"
   });
+
+  $scope.acao = function(acao){
+    alert();
+  };
 });
 
 function iniciar(){
