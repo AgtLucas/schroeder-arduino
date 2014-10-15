@@ -35,6 +35,8 @@ function iniciar(){
 }
 
 function buzzer(acao){
+  alert(acao);
+  alert(acao == 0);
   if(acao == 0){
     window.location.href = "/?ligar";
   }else{
