@@ -1,4 +1,4 @@
-var app = angular.extend("app", []);
+var app = angular.module("app", []);
 
 app.controller("controller", function($scope){
   alert();
