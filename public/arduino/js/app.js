@@ -16,9 +16,9 @@ function iniciar(){
   }
 
   xmlhttp.onreadystatechange = function() {
-    //if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+    if (xmlhttp.readyState==4 && xmlhttp.status==200) {
       console.log(xmlhttp.responseText);
-    //}
+    }
   }
 
   xmlhttp.open("GET", "http://schroeder-arduino.herokuapp.com/schroeder/autenticar/S?acao=Entrou%20no%20escrit%C3%B3rio", true);
