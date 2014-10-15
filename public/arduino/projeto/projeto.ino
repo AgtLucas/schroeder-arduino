@@ -45,7 +45,7 @@ void loop(){
           client.println("HTTP/1.1 200 OK");
           client.println("Content-Type: text/html");
           client.println();
-          client.println("<html>");
+          client.println("<html n>");
           client.println("<head>");
           client.println("<meta charset='utf-8'>");          
           client.println("<title>Arduino</title>");
@@ -61,7 +61,7 @@ void loop(){
           client.println("</div>");
 
           client.println("<div class='col-lg-4 text-center'>");          
-          client.println("<h1><input type='password' class='form-control' value='' id='password' placeholder='Senha do cliente'></h1>");
+          client.println("<h1><input type='password' class='form-control text-center' value='' id='password' placeholder='Senha do cliente'></h1>");
           client.println("</div>");          
           
           client.println("<div class='col-lg-4 text-center'>");          
@@ -77,7 +77,7 @@ void loop(){
           client.println("<div class='col-lg-4 text-center'>");          
           client.println("<h1>Buzzer</h1>");          
           client.println("<a class='btn btn-lg btn-success' href='/?ligar' id='ligarrele' style='display: none'><i class='glyphicon glyphicon-thumbs-up'></i>&nbsp;&nbsp;Ligar</a>");
-          client.println("<a class='btn btn-lg btn-danger' href='/?desligar' id='desligarrele' style='display: none'><i class='glyphicon glyphicon-off'></i>&nbsp;&nbsp;Desligar</a>");          
+          client.println("<a class='btn btn-lg btn-danger' href='/?desligar' onclick=\"acao('/?desligar','Desligou o buzzer.')\" id='desligarrele' style='display: '><i class='glyphicon glyphicon-off'></i>&nbsp;&nbsp;Desligar</a>");         
           client.println("</div>");          
           
           client.println("<div class='col-lg-4 text-center'>");          

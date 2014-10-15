@@ -34,6 +34,6 @@ function iniciar(){
 
 }
 
-function acao(acaoExecutar){
-  alert(acaoExecutar);
+function acao(acao, descricao){
+  window.location.href = acao;
 };
