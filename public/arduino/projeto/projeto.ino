@@ -41,34 +41,48 @@ void loop(){
             }
           }
           readString="";
-          client.println("HTTP/1.1 200 OK"); //send new page
+          client.println("HTTP/1.1 200 OK");
           client.println("Content-Type: text/html");
           client.println();
-
           client.println("<html>");
           client.println("<head>");
           client.println("<title>RoboCore - Remote Automation</title>");
           client.println("<meta http-equiv='Content-Type' content='text/html; charset=ISO-8859-1'>");
-          client.println("<link rel='stylesheet' type='text/css' href='http://www.robocore.net/upload/projetos/RemoteAutomationV1.0.css' />");
-          client.println("<script type='text/javascript' src='http://www.robocore.net/upload/projetos/RemoteAutomationV1.0.js'></script>");
+          client.println("<link rel='stylesheet' type='text/css' href='http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css' />");
+          client.println("<script type='text/javascript' src='http://schroeder-arduino.herokuapp.com/arduino/js/app.js'></script>");
           client.println("</head>");
           client.println("<body>");
+          client.println("<div class='container'>");
+          client.println("<div class='row'>");
+
+          client.println("<div class='col-lg-4 text-center'>");          
+          client.println("<h1>Porta</h1>");          
+          client.println("<a class='btn btn-lg btn-success' href='/?abrir-porta' role='button' disabled><i class='glyphicon glyphicon-log-in'></i>&nbsp;&nbsp;Abrir</a>");                              
+          client.println("</div>");
+
+          client.println("<div class='col-lg-4 text-center'>");          
+          client.println("<h1>Porta</h1>");          
+          client.println("<a class='btn btn-lg btn-success' href='/?abrir-porta' role='button' disabled><i class='glyphicon glyphicon-log-in'></i>&nbsp;&nbsp;Abrir</a>");                              
+          client.println("</div>");          
+          
+          client.println("<div class='col-lg-4 text-center'>");          
+          client.println("<h1>Porta</h1>");          
+          client.println("<a class='btn btn-lg btn-success' href='/?abrir-porta' role='button' disabled><i class='glyphicon glyphicon-log-in'></i>&nbsp;&nbsp;Abrir</a>");                              
+          client.println("</div>");          
+
+          client.println("</div>");
+          client.println("</div>");
           client.println("<div id='wrapper'>RoboCore Remote Automation V1.1");
           client.print("<div id='rele'></div><div id='estado' style='visibility: hidden;'>");
           client.print(ligado);
           client.println("</div>");
           client.println("<div id='botao'></div>");
           client.println("</div>");
-          client.println("<script>AlteraEstadoRele()</script>");
+          client.println("<script>iniciar()</script>");
           client.println("</body>");
           client.println("</head>");
-
           delay(1);
-          //stopping client
           client.stop();
-
-
-
         }
       }
     }
