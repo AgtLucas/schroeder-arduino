@@ -4,16 +4,16 @@
     <meta charset="utf-8">
     <meta http-equiv='Content-Type' content='text/html; charset=ISO-8859-1'>
     <link rel='stylesheet' type='text/css' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css' />
-    <script type='text/javascript' src='http://www.robocore.net/upload/projetos/RemoteAutomationV1.0.js'></script>
+    <script type='text/javascript' src='http://schroeder-arduino.herokuapp.com/arduino/js/app.js'></script>
   </head>
   <body>
     <div class="container">
       <div class="row">
         <div class="col-lg-4 text-center">
           <h1>Porta</h1>
-          <button class="btn btn-lg btn-success" href="#" role="button">
+          <a class="btn btn-lg btn-success" href="/?abrir-porta" role="button">
             <i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Abrir
-          </button>
+          </a>
         </div>
         <div class="col-lg-4 text-center">
           <h1>Ar condicionado</h1>
@@ -29,11 +29,6 @@
         </div>
       </div>
     </div>
-    <div id='wrapper'>
-      <div id='rele'></div>
-      <div id='estado' style='visibility: hidden;'>1</div>
-      <div id='botao'></div>
-    </div>
-    <script>AlteraEstadoRele()</script>
+    <script>iniciar()</script>
   </body>
 </head>
