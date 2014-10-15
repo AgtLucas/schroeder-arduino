@@ -30,7 +30,7 @@ function acao(local, acao){
 
   var password = document.getElementById("password").value;
   if(password == ""){
-    return alert('Senha inválida!');
+    return alert('Digite a senha do cliente!');
   }
   var url = 'http://schroeder-arduino.herokuapp.com/schroeder/autenticar/' + password;
   url = url + '?acao=' + acao;
