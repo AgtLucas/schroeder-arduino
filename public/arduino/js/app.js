@@ -34,10 +34,10 @@ function iniciar(){
 
 }
 
-function buzzerOn(acao){
+function buzzerOn(){
   window.location.href = "/?ligar";
 };
 
-function buzzerOff(acao){
+function buzzerOff(){
   window.location.href = "/?desligar";
 };
