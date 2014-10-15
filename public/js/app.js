@@ -39,6 +39,10 @@ define(['angularAMD', 'angular-route'], function (angularAMD) {
       templateUrl: '/views/arduino/temporeal/' + Math.random(),
       controller: 'tempoReal',
       controllerUrl: 'js/arduino/temporeal/controller'
+    })).when("/sensores", angularAMD.route({
+      templateUrl: '/views/arduino/sensores/' + Math.random(),
+      controller: 'sensores',
+      controllerUrl: 'js/arduino/sensores/controller'
     })).when("/logs", angularAMD.route({
       templateUrl: '/views/log/' + Math.random(),
       controller: 'log',

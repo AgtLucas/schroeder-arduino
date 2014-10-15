@@ -104,7 +104,11 @@ app.get('/views/home/:page', naoAutenticadoPage, function(req, res, next){
 });
 
 app.get('/views/arduino/temporeal/:page', naoAutenticadoPage, function(req, res, next){
-  res.sendfile('public/views/arduino/temporeal/index.html', { user: req.user });
+  res.redirect('http://google.com');
+});
+
+app.get('/views/arduino/sensores/:page', naoAutenticadoPage, function(req, res, next){
+  res.sendfile('public/views/arduino/sensores/index.html', { user: req.user });
 });
 
 app.get('/views/log/:page', naoAutenticadoPage, function(req, res, next){
