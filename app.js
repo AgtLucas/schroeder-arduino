@@ -201,12 +201,12 @@ app.get('/schroeder/autenticar/:password', function(req, res, next){
 
 app.post('/schroeder/users', users.newUser)
 app.post('/schroeder/logs', log.newLog)
-app.post('/schroeder/clients', client.newClient)
-app.get('/schroeder/arduinos/:id', arduinos.find)
-app.post('/schroeder/arduinos', arduinos.create)
-app.del('/schroeder/arduinos/:id', arduinos.destroy)
-app.del('/schroeder/users/:id', users.destroy)
-app.del('/schroeder/clients/:id', client.destroy)
+app.post('/schroeder/clients', naoAutenticado, client.newClient)
+app.get('/schroeder/arduinos/:id', naoAutenticado, arduinos.find)
+app.post('/schroeder/arduinos', naoAutenticado, arduinos.create)
+app.del('/schroeder/arduinos/:id', naoAutenticado, arduinos.destroy)
+app.del('/schroeder/users/:id', naoAutenticado, users.destroy)
+app.del('/schroeder/clients/:id', naoAutenticado, client.destroy)
 
 //app.get('/schroeder/users/', users.findAll)
 
