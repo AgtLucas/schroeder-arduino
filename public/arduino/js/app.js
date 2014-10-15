@@ -1,14 +1,3 @@
-var app = angular.module("app", []);
-
-app.controller("controller", function($scope){
-  angular.extend($scope, {
-  });
-
-  $scope.acao = function(acao){
-    alert();
-  };
-});
-
 function iniciar(){
   var estado = document.getElementById("estado").innerHTML;
   if(estado === "0"){

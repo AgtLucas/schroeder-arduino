@@ -1,4 +1,4 @@
-<html ng-app="app">
+<html ng-app='app'>
   <head>
     <title>Arduino</title>
     <meta charset='utf-8'>
@@ -7,7 +7,7 @@
     <script type='text/javascript' src='http://schroeder-arduino.herokuapp.com/lib/angular/angular.min.js'></script>
     <script type='text/javascript' src='http://schroeder-arduino.herokuapp.com/arduino/js/app.js'></script>
   </head>
-  <body ng-controller="controller">
+  <body ng-controller='controller'>
     <div class='container'>
       <div class='row'>
         <div class='col-lg-4 text-center'>
@@ -25,8 +25,8 @@
         </div>
         <div class='col-lg-4 text-center'>
           <h1>Buzzer</h1>
-          <a class='btn btn-lg btn-success' ng-click='acao(1)' id='ligarrele' style='display: none'><i class='glyphicon glyphicon-thumbs-up'></i>&nbsp;&nbsp;Ligar</a>
-          <button type="button" class='btn btn-lg btn-danger' href='/?desligar' id='desligarrele' style='display: none'><i class='glyphicon glyphicon-off'></i>&nbsp;&nbsp;Desligar</button>
+          <button type='button' class='btn btn-lg btn-success' ng-click='acao(1)' id='ligarrele'><i class='glyphicon glyphicon-thumbs-up'></i>&nbsp;&nbsp;Ligar</button>
+          <button type='button' class='btn btn-lg btn-danger' ng-click='acao(0)' id='desligarrele'><i class='glyphicon glyphicon-off'></i>&nbsp;&nbsp;Desligar</button>
         </div>
         <div class='col-lg-4 text-center'>
           <h1>Lâmpada</h1>
