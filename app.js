@@ -171,7 +171,7 @@ if ('development' === app.get('env')) {
   app.use(errorHandler())
 }
 
-app.put('/schroeder/arduinos/:id', arduinos.update)
+app.put('/schroeder/arduinso/:id', arduinos.update)
 app.put('/schroeder/users/:id', naoAutenticado, users.update)
 app.get('/schroeder/create', function(req, res, next){
   arduinos.createGet(req, res);
@@ -184,6 +184,8 @@ app.get('/schroeder/create', function(req, res, next){
 });
 
 app.get('/schroeder/autenticar/:password', function(req, res, next){
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   db.Client.find({ where: { password: req.param('password') } }).success(function(entityUser) {
     if (entityUser) {
       var _log = { ClientId: entityUser.id, descricao: req.param('acao') };
