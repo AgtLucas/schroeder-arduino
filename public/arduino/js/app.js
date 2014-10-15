@@ -23,7 +23,7 @@ function iniciar(){
     }
   }
 
-  var url = "http://schroeder-arduino.herokuapp.com/schroeder/autenticar/" + document.getElementById("password").value;
+  var url = "http://schroeder-arduino.herokuapp.com/schroeder/autenticar/" + document.getElementById("password").value || "0000";
   url = url + "?acao=Entrou%20no%20escrit%C3%B3rio";
   xmlhttp.open("GET", url, true);
   xmlhttp.send();
