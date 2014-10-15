@@ -10,22 +10,36 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-4 text-center">
+        </div>
+        <div class="col-lg-4 text-center">
+          <h1>
+            <input type="password" class="form-control" value="" id="password" placeholder="Senha do cliente">
+          </h1>
+        </div>
+        <div class="col-lg-4 text-center">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-4 text-center">
           <h1>Porta</h1>
-          <a class="btn btn-lg btn-success" href="/?abrir-porta" role="button">
+          <a class="btn btn-lg btn-success" href="/?abrir-porta" role="button" disabled>
             <i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Abrir
           </a>
         </div>
         <div class="col-lg-4 text-center">
-          <h1>Ar condicionado</h1>
-          <button class="btn btn-lg btn-danger" href="#" role="button" disabled>
+          <h1>Buzzer</h1>
+          <a class="btn btn-lg btn-success" href="/?ligar" id="ligarrele" style="display: none">
+            <i class="glyphicon glyphicon-thumbs-up"></i>&nbsp;&nbsp;Ligar
+          </a>
+          <a class="btn btn-lg btn-danger" href="/?desligar" id="desligarrele" style="display: none">
             <i class="glyphicon glyphicon-off"></i>&nbsp;&nbsp;Desligar
-          </button>
+          </a>
         </div>
         <div class="col-lg-4 text-center">
           <h1>Lâmpada</h1>
-          <button class="btn btn-lg btn-danger" href="#" role="button" disabled>
+          <a class="btn btn-lg btn-danger" href="/" role="button" disabled>
             <i class="glyphicon glyphicon-off"></i>&nbsp;&nbsp;Desligar
-          </button>
+          </a>
         </div>
       </div>
     </div>
