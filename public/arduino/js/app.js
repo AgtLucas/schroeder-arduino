@@ -35,9 +35,9 @@ function iniciar(){
 }
 
 function buzzerOn(){
-  window.location.href = "/?ligar";
+  window.location.href = '/?ligar';
 };
 
 function buzzerOff(){
-  window.location.href = "/?desligar";
+  window.location.href = '/?desligar';
 };
