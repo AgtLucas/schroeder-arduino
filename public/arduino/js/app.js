@@ -8,7 +8,7 @@ function iniciar(){
       document.getElementById("ligarrele").style.display = "";
   }
 
-  var xmlhttp;
+  /*var xmlhttp;
   if (window.XMLHttpRequest) {
     xmlhttp=new XMLHttpRequest();
   } else {
@@ -30,7 +30,7 @@ function iniciar(){
   var url = "http://schroeder-arduino.herokuapp.com/schroeder/autenticar/" + password;
   url = url + "?acao=Entrou%20no%20escrit%C3%B3rio";
   xmlhttp.open("GET", url, true);
-  xmlhttp.send();
+  xmlhttp.send();*/
 
 }
 
