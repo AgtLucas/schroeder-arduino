@@ -35,7 +35,7 @@ function iniciar(){
 }
 
 function buzzer(acao){
-  if(acao == 1){
+  if(acao == 0){
     window.location.href = "/?ligar";
   }else{
     window.location.href = "/?desligar";
