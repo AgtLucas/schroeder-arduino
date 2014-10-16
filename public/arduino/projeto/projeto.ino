@@ -64,6 +64,7 @@ void loop() {
     }
   }
   if (!client.connected() && lastConnected) { 
+    Serial.println(retorno);
     if(getValue(getValue(retorno, ';', idBuzzer), '-', 1) == "true;"){
       tone(Buzzer,1500);
     }else{
