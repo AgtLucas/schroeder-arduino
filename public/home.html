@@ -13,68 +13,76 @@
     <link href="lib/sweet-alert/css/sweet-alert.css" rel="stylesheet">
   </head>
   <body ng-controller="homeCtrl">
-   <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-     <div class="container">
-      <ul class="nav navbar-nav">
-        <li><a href="/">Home</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            Cadastro &nbsp;<span class="caret"></span>
-          </a>
-          <ul class="dropdown-menu" role="menu">
-            <li>
-              <a href="/new-sensor"><i class="glyphicon glyphicon-tower"></i>&nbsp;&nbsp;Sensor</a>
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="/">Home</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                Cadastro &nbsp;<span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" role="menu">
+                <li>
+                  <a href="/new-sensor"><i class="glyphicon glyphicon-tower"></i>&nbsp;&nbsp;Sensor</a>
+                </li>
+                <li>
+                  <a href="/new-client"><i class="glyphicon glyphicon-user"></i>&nbsp;&nbsp;Cliente</a>
+                </li>
+              </ul>
             </li>
-            <li>
-              <a href="/new-client"><i class="glyphicon glyphicon-user"></i>&nbsp;&nbsp;Cliente</a>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                Consultas &nbsp;<span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" role="menu">
+                <li>
+                  <a href="/sensor"><i class="glyphicon glyphicon-tower"></i>&nbsp;&nbsp;Sensor</a>
+                </li>
+                <li>
+                  <a href="/client"><i class="glyphicon glyphicon-user"></i>&nbsp;&nbsp;Clientes</a>
+                </li>
+                <li>
+                  <a href="/logs"><i class="glyphicon glyphicon-list"></i>&nbsp;&nbsp;Logs</a>
+                </li>
+              </ul>
+            </li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                Arduino &nbsp;<span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" role="menu">
+                <li>
+                  <a href="/tempo-real"><i class="glyphicon glyphicon-time"></i>&nbsp;&nbsp;Tempo real</a>
+                </li>
+                <li>
+                  <a href="/sensores"><i class="glyphicon glyphicon-signal"></i>&nbsp;&nbsp;Sensores</a>
+                </li>
+              </ul>
             </li>
           </ul>
-        </li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            Consultas &nbsp;<span class="caret"></span>
-          </a>
-          <ul class="dropdown-menu" role="menu">
-            <li>
-              <a href="/sensor"><i class="glyphicon glyphicon-tower"></i>&nbsp;&nbsp;Sensor</a>
-            </li>
-            <li>
-              <a href="/client"><i class="glyphicon glyphicon-user"></i>&nbsp;&nbsp;Clientes</a>
-            </li>
-            <li>
-              <a href="/logs"><i class="glyphicon glyphicon-list"></i>&nbsp;&nbsp;Logs</a>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">Configurações <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li>
+                  <a ng-href="/meus-dados"><i class="glyphicon glyphicon-asterisk"></i>&nbsp;&nbsp;Perfil</a>
+                </li>
+                <li>
+                  <a href="javascript:void(0)" ng-click="sair()"><i class="glyphicon glyphicon-log-out"></i>&nbsp;&nbsp;Sair</a>
+                </li>
+              </ul>
             </li>
           </ul>
-        </li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            Arduino &nbsp;<span class="caret"></span>
-          </a>
-          <ul class="dropdown-menu" role="menu">
-            <li>
-              <a href="/tempo-real"><i class="glyphicon glyphicon-time"></i>&nbsp;&nbsp;Tempo real</a>
-            </li>
-            <li>
-              <a href="/sensores"><i class="glyphicon glyphicon-signal"></i>&nbsp;&nbsp;Sensores</a>
-            </li>
-          </ul>
-        </li>
-      </ul>
-      <div class="collapse navbar-collapse navbar-ex1-collapse">
-        <ul class="nav navbar-nav navbar-right">
-          <li class="dropdown">
-            <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">Configurações <span class="caret"></span></a>
-            <ul class="dropdown-menu" role="menu">
-              <li>
-                <a ng-href="/meus-dados"><i class="glyphicon glyphicon-asterisk"></i>&nbsp;&nbsp;Perfil</a>
-              </li>
-              <li>
-                <a href="javascript:void(0)" ng-click="sair()"><i class="glyphicon glyphicon-log-out"></i>&nbsp;&nbsp;Sair</a></li>
-            </ul>
-          </li>
-        </ul>
-       </div>
-     </div>
+        </div>
+      </div>
     </nav>
     <div class="container ng-cloak">
       <div ng-view></div>

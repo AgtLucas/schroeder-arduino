@@ -40,6 +40,7 @@ exports.getConfiguracoes = function(req, res, next) {
     res.json('<' + retorno + '>')
   })
 }
+
 exports.destroy = function(req, res, next) {
   db.Sensor.find({ where: { id: req.param('id') } }).success(function(entity) {
     if (entity) {
