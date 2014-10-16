@@ -37,7 +37,7 @@ exports.getConfiguracoes = function(req, res, next) {
     for(var i = 0; i < entities.length; i++){
       retorno = retorno + entities[i].id + "-" + entities[i].status + ";";
     }
-    res.json("//" + retorno)
+    res.json('<' + retorno + '>')
   })
 }
 
