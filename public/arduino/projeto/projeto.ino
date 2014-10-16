@@ -35,7 +35,6 @@ const int idBuzzer = 0;
 //Serial
 const int Buzzer = A1;
 
-
 void setup() {
   Serial.begin(9600);
   Ethernet.begin(mac, ip);
@@ -46,7 +45,8 @@ void loop() {
    if(keypressed == 'C'){
      password = "";
    }else if(keypressed == 'D'){
-     abrirPorta(password);
+     abrirPorta(password);         
+     password = "";
    }else{
      password = password + String(keypressed);
     }
