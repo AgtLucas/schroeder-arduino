@@ -15,6 +15,7 @@ var express        = require('express')
   , login = require('./routes/login')
   , client = require('./routes/client')
   , log = require('./routes/log')
+  , sensor = require('./routes/sensor')
 
 app.set('port', process.env.PORT || 3000)
 app.use(bodyParser())
@@ -103,6 +104,14 @@ app.get('/views/perfil/:page', naoAutenticadoPage, function(req, res, next){
   res.sendfile('public/views/perfil/index.html', { user: req.user });
 });
 
+app.get('/views/sensor/:page', naoAutenticadoPage, function(req, res, next){
+  res.sendfile('public/views/sensor/index.html', { user: req.user });
+});
+
+app.get('/views/sensor/new/:page', naoAutenticadoPage, function(req, res, next){
+  res.sendfile('public/views/sensor/new/index.html', { user: req.user });
+});
+
 app.get('/views/home/:page', naoAutenticadoPage, function(req, res, next){
   res.sendfile('public/views/home/index.html', { user: req.user });
 });
@@ -136,6 +145,8 @@ app.get('/schroeder/medicoes', function(req, res, next){
 app.get('/schroeder/medicoes/last', naoAutenticado, arduinos.findLast)
 
 app.get('/schroeder/clients', naoAutenticado, client.findAll)
+
+app.get('/schroeder/sensores', naoAutenticado, sensor.findAll)
 
 app.get('/schroeder/logs/', naoAutenticado, log.findAll)
 
@@ -171,7 +182,7 @@ if ('development' === app.get('env')) {
   app.use(errorHandler())
 }
 
-app.put('/schroeder/arduinso/:id', arduinos.update)
+app.put('/schroeder/sensor/:id', naoAutenticado, sensor.update)
 app.put('/schroeder/users/:id', naoAutenticado, users.update)
 app.get('/schroeder/create', function(req, res, next){
   arduinos.createGet(req, res);
@@ -183,34 +194,16 @@ app.get('/schroeder/create', function(req, res, next){
   });
 });
 
-app.get('/schroeder/autenticar/:password', function(req, res, next){
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  db.Client.find({ where: { password: req.param('password') } }).success(function(entityUser) {
-    if (entityUser) {
-      var _log = { ClientId: entityUser.id, descricao: req.param('acao') };
-      db.Log.create(_log).success(function(entityLog) {
-        io.emit('new-log', entityLog, entityUser);
-        res.send('1');
-      }).error(function(error, e){
-        res.send('0');
-      });
-    } else {
-      res.send('0');
-    }
-  });
-});
-
 app.post('/schroeder/users', users.newUser)
-app.post('/schroeder/logs', log.newLog)
 app.post('/schroeder/clients', naoAutenticado, client.newClient)
+app.post('/schroeder/sensor', naoAutenticado, sensor.newSensor)
 app.get('/schroeder/arduinos/:id', naoAutenticado, arduinos.find)
 app.post('/schroeder/arduinos', naoAutenticado, arduinos.create)
 app.del('/schroeder/arduinos/:id', naoAutenticado, arduinos.destroy)
 app.del('/schroeder/users/:id', naoAutenticado, users.destroy)
 app.del('/schroeder/clients/:id', naoAutenticado, client.destroy)
+app.del('/schroeder/sensor/:id', naoAutenticado, sensor.destroy)
 
-//app.get('/schroeder/users/', users.findAll)
 
 var io = null;
 

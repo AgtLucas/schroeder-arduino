@@ -55,6 +55,14 @@ define(['angularAMD', 'angular-route'], function (angularAMD) {
       templateUrl: '/views/client/' + Math.random(),
       controller: 'client',
       controllerUrl: 'js/client/controller'
+    })).when("/new-sensor", angularAMD.route({
+      templateUrl: '/views/sensor/new/' + Math.random(),
+      controller: 'new-sensor',
+      controllerUrl: 'js/sensor/new/controller'
+    })).when("/sensor", angularAMD.route({
+      templateUrl: '/views/sensor/' + Math.random(),
+      controller: 'sensor',
+      controllerUrl: 'js/sensor/controller'
     })).otherwise({redirectTo: "/home"});
 
     var httpStatusInterceptor = function($window){

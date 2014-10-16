@@ -16,14 +16,6 @@ exports.find = function(req, res, next) {
   })
 }
 
-exports.newLog = function(req, res, next) {
-  db.Log.create(req.body).success(function(entity) {
-    res.json(1)
-  }).error(function(error, e){
-    res.json(0)
-  });
-}
-
 exports.update = function(req, res, next) {
   db.Log.find({ where: { id: req.param('id') } }).success(function(entity) {
     if (entity) {

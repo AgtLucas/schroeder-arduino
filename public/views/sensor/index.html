@@ -1,0 +1,30 @@
+<h3>
+	<i class="glyphicon glyphicon-tower"></i>
+	&nbsp;&nbsp;Sensores
+</h3>
+<body>
+	<table class="table table-condensed table-bordered">
+		<thead>
+			<tr>
+				<th>Nome</th>
+				<th style="width: 150px">Mensagem On</th>
+				<th style="width: 150px">Mensagem Off</th>
+				<th style="width: 200px">On</th>
+				<th style="width: 200px">Off</th>
+				<th style="width: 100px" class="text-center">Ações</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="obj in dados">
+				<td>{{obj.nome}}</td>
+				<td style="width: 150px">{{obj.statusOn}}</td>
+				<td style="width: 150px">{{obj.statusOff}}</td>
+				<td style="width: 200px">{{obj.on}}</td>
+				<td style="width: 200px">{{obj.off}}</td>
+				<td style="width: 100px" class="text-center">
+					<button ng-click="remover(obj, $index)" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</body>
