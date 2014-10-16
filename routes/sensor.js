@@ -35,7 +35,7 @@ exports.getConfiguracoes = function(req, res, next) {
   db.Sensor.findAll().success(function(entities) {
     var retorno = "";
     for(var i = 0; i < entities.length; i++){
-      retorno = retorno + entities[i].id + "-" + entities[i].status + ";";
+      retorno = retorno + i + "-" + entities[i].status + ";";
     }
     res.json('<' + retorno + '>')
   })
