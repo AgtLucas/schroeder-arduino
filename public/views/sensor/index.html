@@ -15,7 +15,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat="obj in dados">
+			<tr ng-repeat="obj in dados | orderBy:'nome'">
 				<td>{{obj.nome}}</td>
 				<td style="width: 150px">{{obj.statusOn}}</td>
 				<td style="width: 150px">{{obj.statusOff}}</td>

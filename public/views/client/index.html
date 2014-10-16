@@ -12,7 +12,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat="obj in dados">
+			<tr ng-repeat="obj in dados | orderBy:'nome'">
 				<td>{{obj.nome}}</td>
 				<td style="width: 200px" class="text-center">{{obj.password}}</td>
 				<td style="width: 100px" class="text-center">
