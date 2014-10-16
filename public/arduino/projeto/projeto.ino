@@ -25,28 +25,26 @@ void setup() {
   Ethernet.begin(mac, ip);
 }
 void loop() {
-  String teste = "1-false;2-false";
-  if(getValue(getValue(teste, ';', idBuzzer), '-', 1) == "true"){
-    tone(Buzzer,1500);
-  }else{
-    noTone(Buzzer);
-  }
   if (client.available()) {
     char c = client.read();
-    Serial.println(c);
     if(c == '>'){
       passou = 0;
     }
     if(passou == 1){
-      Serial.print(c); 
       retorno = retorno + c;
     } 
     if(c == '<'){
       passou = 1;
     }
   }
-  if (!client.connected() && lastConnected) {
-    Serial.println(retorno);
+  if (!client.connected() && lastConnected) { 
+    Serial.print(getValue(retorno, ';', idBuzzer));    
+    if(getValue(getValue(retorno, ';', idBuzzer), '-', 1) == "true"){
+      tone(Buzzer,1500);
+      Serial.println("Buzzer ligado!");
+    }else{
+      noTone(Buzzer);
+    }
     retorno = "";
     client.stop();
   }
