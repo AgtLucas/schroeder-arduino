@@ -148,6 +148,8 @@ app.get('/schroeder/clients', naoAutenticado, client.findAll)
 
 app.get('/schroeder/sensores', naoAutenticado, sensor.findAll)
 
+app.get('/schroeder/configuracoes', sensor.getConfiguracoes)
+
 app.get('/schroeder/logs/', naoAutenticado, log.findAll)
 
 app.post('/schroeder/login',

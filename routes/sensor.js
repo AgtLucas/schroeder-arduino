@@ -31,6 +31,16 @@ exports.newSensor = function(req, res, next) {
   })
 }
 
+exports.getConfiguracoes = function(req, res, next) {
+  db.Sensor.findAll().success(function(entities) {
+    var retorno = "";
+    for(var i = 0; i < entities.length; i++){
+      retorno = retorno + entities[i].id + "-" + entities[i].status + ";";
+    }
+    res.json(retorno)
+  })
+}
+
 exports.update = function(req, res, next) {
   db.Sensor.find({ where: { id: req.param('id') } }).success(function(entity) {
     if (entity) {
