@@ -184,7 +184,34 @@ if ('development' === app.get('env')) {
   app.use(errorHandler())
 }
 
-app.put('/schroeder/sensor/:id', naoAutenticado, sensor.update)
+app.put('/schroeder/sensor/:id', naoAutenticado, function(req, res, next){
+  db.Sensor.find({ where: { id: req.param('id') } }).success(function(entity) {
+    if (entity) {
+      db.Client.find({ where: { password: req.body.password } }).success(function(entityUser) {
+        if (entityUser) {
+          var _log;
+          if(!entity.status){
+            _log = { ClientId: entityUser.id, descricao: entity.on };
+          }else{
+            _log = { ClientId: entityUser.id, descricao: entity.off };
+          }
+          entity.status = !entity.status;
+          entity.updateAttributes(entity).success(function(entity) {
+            db.Log.create(_log).success(function(entityLog) {
+              io.emit('new-log', entityLog, entityUser);
+              res.json({ error: 0, message: "Salvo com sucesso!", entity: entity })
+            });
+          })
+        } else {
+          res.send({ error: 2, message: "Usuário não cadastrado!" })
+        }
+      });
+    } else {
+      res.send({ error: 2, message: "Sensor não cadastrado!" })
+    }
+  })
+});
+
 app.put('/schroeder/users/:id', naoAutenticado, users.update)
 app.get('/schroeder/create', function(req, res, next){
   arduinos.createGet(req, res);
@@ -194,6 +221,40 @@ app.get('/schroeder/create', function(req, res, next){
     createdAt: new Date(),
     updateAt: new Date(),
   });
+});
+
+app.get('/schroeder/autenticar/:password', function(req, res, next){
+  db.Sensor.find({ where: { id: req.param('idSensor') } }).success(function(entity) {
+    if (entity) {
+      db.Client.find({ where: { password: req.param('password') } }).success(function(entityUser) {
+        if (entityUser) {
+          var _log;
+          if(!entity.status){
+            _log = { ClientId: entityUser.id, descricao: entity.on };
+          }else{
+            _log = { ClientId: entityUser.id, descricao: entity.off };
+          }
+          entity.status = !entity.status;
+          entity.updateAttributes(entity).success(function(entity) {
+            db.Log.create(_log).success(function(entityLog) {
+              io.emit('new-log', entityLog, entityUser);
+              db.Sensor.findAll().success(function(entities) {
+                var retorno = "";
+                for(var i = 0; i < entities.length; i++){
+                  retorno = retorno + entities[i].id + "-" + entities[i].status + ";";
+                }
+                res.json('<' + retorno + '>')
+              })
+            });
+          })
+        } else {
+          res.send({ error: 2, message: "Usuário não cadastrado!" })
+        }
+      });
+    } else {
+      res.send({ error: 2, message: "Sensor não cadastrado!" })
+    }
+  })
 });
 
 app.post('/schroeder/users', users.newUser)

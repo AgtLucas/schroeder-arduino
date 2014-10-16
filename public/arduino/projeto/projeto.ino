@@ -1,5 +1,6 @@
 #include <SPI.h>
 #include <Ethernet.h>
+#include <Keypad.h>
 
 byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
 IPAddress ip(192,168,0,50);
@@ -9,22 +10,47 @@ unsigned long lastConnectionTime = 0;
 boolean lastConnected = false;
 const unsigned long postingInterval = 6000;
 
+
+//Teclado
+const byte numRows=4;
+const byte numCols=4;
+char keymap[numRows][numCols]= {
+  {'1','2','3','A'},
+  {'4','5','6','B'},
+  {'7','8','9','C'},
+  {'*','0','#','D'},
+};
+byte rowPins[numRows] = {9,8,7,6};
+byte colPins[numCols] = {5,4,3,2};
+Keypad myKeypad = Keypad(makeKeymap(keymap), rowPins, colPins, numRows, numCols);
+
+
 int passou = 0;
 String retorno = "";
+String password = "";
 
 //Posiçao dos sensores
 const int idBuzzer = 0;
 
 //Serial
-const int Buzzer = 9;
+const int Buzzer = A1;
 
 
 void setup() {
   Serial.begin(9600);
-  delay(1000);
   Ethernet.begin(mac, ip);
 }
 void loop() {
+  char keypressed = myKeypad.getKey();
+  if(keypressed !=  NO_KEY){
+   if(keypressed == 'C'){
+     password = "";
+   }else if(keypressed == 'D'){
+     abrirPorta(password);
+   }else{
+     password = password + String(keypressed);
+    }
+  }
   if (client.available()) {
     char c = client.read();
     if(c == '>'){
@@ -38,10 +64,8 @@ void loop() {
     }
   }
   if (!client.connected() && lastConnected) { 
-    Serial.print(getValue(retorno, ';', idBuzzer));    
-    if(getValue(getValue(retorno, ';', idBuzzer), '-', 1) == "true"){
+    if(getValue(getValue(retorno, ';', idBuzzer), '-', 1) == "true;"){
       tone(Buzzer,1500);
-      Serial.println("Buzzer ligado!");
     }else{
       noTone(Buzzer);
     }
@@ -61,9 +85,23 @@ void httpRequest() {
     client.println("Host: schroeder-arduino.herokuapp.com");
     client.println("Connection: close");
     client.println();
-
-    lastConnectionTime = millis();
+  }else {   
+    client.stop();
   }
+  lastConnectionTime = millis();
+}
+
+void abrirPorta(String senha) {
+  if (client.connect(server, 80)) {
+    String url = "/schroeder/autenticar/" + senha + "?idSensor=1";
+    client.println("GET " + url + " HTTP/1.0");
+    client.println("Host: schroeder-arduino.herokuapp.com");
+    client.println("Connection: close");
+    client.println();
+  }else {   
+    client.stop();
+  }
+  lastConnectionTime = millis();
 }
 
 String getValue(String data, char separator, int index){
