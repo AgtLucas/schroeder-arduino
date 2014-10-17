@@ -10,7 +10,6 @@ var express        = require('express')
   , flash = require('connect-flash')
   , LocalStrategy = require('passport-local').Strategy
   , arduinos = require('./routes/arduino')
-  , types = require('./routes/type')
   , users = require('./routes/user')
   , login = require('./routes/login')
   , acao = require('./routes/acao')
@@ -91,7 +90,6 @@ passport.use(new LocalStrategy(
     });
   }
 ));
-
 
 app.get('/', function(req, res, next){
   res.sendfile('public/index.html', { user: req.user, message: req.flash('error') });
@@ -274,7 +272,7 @@ if ('development' === app.get('env')) {
 
 var io = null;
 
-db.sequelize.sync({ force: false }).complete(function(err) {
+db.sequelize.sync({ force: true }).complete(function(err) {
   if (err) {
     throw err
   } else {

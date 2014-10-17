@@ -8,14 +8,10 @@ module.exports = function(sequelize, DataTypes) {
     },
     password: {
       type: DataTypes.STRING
-    },
-    type: {
-      type: DataTypes.INTEGER
     }
   }, {
     classMethods: {
       associate: function(models) {
-        User.belongsTo(models.Type)
         User.hasMany(models.Log)
       }
     }
