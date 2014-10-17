@@ -42,13 +42,64 @@ exports.getConfiguracoes = function(req, res, next) {
 }
 
 exports.destroy = function(req, res, next) {
-  db.Sensor.find({ where: { id: req.param('id') } }).success(function(entity) {
-    if (entity) {
-      entity.destroy().success(function() {
-        res.send(204)
+  var passou = 0;
+  db.Acao.findAll({ where: { sensorOrigemId: req.param('id') } }).success(function(data) {
+    if(data.length > 0){
+      for(var i = 0; i < data.length; i++){
+        db.Acao.find({ where: { id: data[i].id } }).success(function(entity) {
+          if (entity) {
+            entity.destroy().success(function() {
+              if(i == data.length && passou == 0){
+                passou = 1;
+                db.Sensor.find({ where: { id: req.param('id') } }).success(function(entitySensor) {
+                  if (entitySensor) {
+                    entitySensor.destroy().success(function() {
+                      res.send(204)
+                    })
+                  } else {
+                    res.send(404)
+                  }
+                })
+              }
+            })
+          }
+        });
+      }
+    }else{
+      db.Acao.findAll({ where: { sensorDestinoId: req.param('id') } }).success(function(data) {
+        if(data.length > 0){
+          for(var i = 0; i < data.length; i++){
+            db.Acao.find({ where: { id: data[i].id } }).success(function(entity) {
+              if (entity) {
+                entity.destroy().success(function() {
+                  if(i == data.length && passou == 0){
+                    passou = 1;
+                    db.Sensor.find({ where: { id: req.param('id') } }).success(function(entitySensor) {
+                      if (entitySensor) {
+                        entitySensor.destroy().success(function() {
+                          res.send(204)
+                        })
+                      } else {
+                        res.send(404)
+                      }
+                    })
+                  }
+                })
+              }
+            });
+          }
+        }else{
+          db.Sensor.find({ where: { id: req.param('id') } }).success(function(entitySensor) {
+            if (entitySensor) {
+              entitySensor.destroy().success(function() {
+                res.send(204)
+              })
+            } else {
+              res.send(404)
+            }
+          })
+        }
       })
-    } else {
-      res.send(404)
     }
   })
 }

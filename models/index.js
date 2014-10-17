@@ -20,11 +20,11 @@ var fs        = require('fs')
     });
   }
 
-var Client   = sequelize.import(__dirname + "/client")
+var User   = sequelize.import(__dirname + "/user")
   , Log      = sequelize.import(__dirname + "/log")
 
-Client.hasMany(Log)
-Log.belongsTo(Client)
+User.belongsTo(Log)
+Log.belongsTo(User)
 
 fs
   .readdirSync(__dirname)
@@ -37,7 +37,6 @@ fs
   })
 
 Object.keys(db).forEach(function(modelName) {
-  console.log(db[modelName].associate);
   if (db[modelName].associate != undefined) {
     db[modelName].associate(db)
   }

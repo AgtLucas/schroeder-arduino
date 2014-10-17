@@ -13,7 +13,7 @@ var express        = require('express')
   , types = require('./routes/type')
   , users = require('./routes/user')
   , login = require('./routes/login')
-  , client = require('./routes/client')
+  , acao = require('./routes/acao')
   , log = require('./routes/log')
   , sensor = require('./routes/sensor')
 
@@ -21,6 +21,7 @@ app.set('port', process.env.PORT || 3000)
 app.use(bodyParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
+// Configurações
 app.configure(function() {
   app.use(express.logger());
   app.use(express.cookieParser());
@@ -32,6 +33,7 @@ app.configure(function() {
   app.use(app.router);
 });
 
+// Procurar usuário pelo Id
 function findById(id, fn) {
   db.User.find({ where: { id: id } }).success(function(entity) {
     if (entity) {
@@ -42,6 +44,7 @@ function findById(id, fn) {
   });
 }
 
+// Procurar usuário pelo Nome
 function findByUsername(username, fn) {
   db.User.find({ where: { email: username } }).success(function(entity) {
     if (entity) {
@@ -52,6 +55,17 @@ function findByUsername(username, fn) {
   });
 }
 
+function naoAutenticado(req, res, next) {
+  if (req.isAuthenticated()) { return next(); }
+  res.send({ error: 1 });
+}
+
+function naoAutenticadoHome(req, res, next) {
+  if (req.isAuthenticated()) { return next(); }
+  res.redirect('/');
+}
+
+// Configurações autenticação
 passport.serializeUser(function(user, done) {
   done(null, user.id);
 });
@@ -78,6 +92,7 @@ passport.use(new LocalStrategy(
   }
 ));
 
+
 app.get('/', function(req, res, next){
   res.sendfile('public/index.html', { user: req.user, message: req.flash('error') });
 });
@@ -86,55 +101,20 @@ app.get('/home', naoAutenticadoHome, function(req, res, next){
   res.sendfile('public/home.html', { user: req.user });
 });
 
+app.get('/schroeder/configuracoes', sensor.getConfiguracoes)
+
 app.get('/schroeder/users/info', naoAutenticado, function(req, res, next){
-  var retorno = {
+  res.json({
     id: req.user.id,
     nome: req.user.nome,
     email: req.user.email,
     password: req.user.password
-  };
-  res.json(retorno);
+  });
 });
 
-app.get('/arduino', naoAutenticadoPage, function(req, res, next){
-  res.redirect('http://fabricioronchi.com');
-});
+app.get('/schroeder/acao', acao.findAll)
 
-app.get('/views/perfil/:page', naoAutenticadoPage, function(req, res, next){
-  res.sendfile('public/views/perfil/index.html', { user: req.user });
-});
-
-app.get('/views/sensor/:page', naoAutenticadoPage, function(req, res, next){
-  res.sendfile('public/views/sensor/index.html', { user: req.user });
-});
-
-app.get('/views/sensor/new/:page', naoAutenticadoPage, function(req, res, next){
-  res.sendfile('public/views/sensor/new/index.html', { user: req.user });
-});
-
-app.get('/views/home/:page', naoAutenticadoPage, function(req, res, next){
-  res.sendfile('public/views/home/index.html', { user: req.user });
-});
-
-app.get('/views/arduino/temporeal/:page', naoAutenticadoPage, function(req, res, next){
-  res.sendfile('public/views/arduino/temporeal/index.html', { user: req.user });
-});
-
-app.get('/views/arduino/sensores/:page', naoAutenticadoPage, function(req, res, next){
-  res.sendfile('public/views/arduino/sensores/index.html', { user: req.user });
-});
-
-app.get('/views/log/:page', naoAutenticadoPage, function(req, res, next){
-  res.sendfile('public/views/log/index.html', { user: req.user });
-});
-
-app.get('/views/client/:page', naoAutenticadoPage, function(req, res, next){
-  res.sendfile('public/views/client/index.html', { user: req.user });
-});
-
-app.get('/views/client/new/:page', naoAutenticadoPage, function(req, res, next){
-  res.sendfile('public/views/client/new/index.html', { user: req.user });
-});
+app.get('/schroeder/sensores', naoAutenticado, sensor.findAll)
 
 app.get('/schroeder/medicoes', function(req, res, next){
   res.header("Access-Control-Allow-Origin", "*");
@@ -142,97 +122,59 @@ app.get('/schroeder/medicoes', function(req, res, next){
   arduinos.findAll(req, res, next);
 });
 
-app.get('/schroeder/medicoes/last', naoAutenticado, arduinos.findLast)
-
-app.get('/schroeder/clients', naoAutenticado, client.findAll)
-
-app.get('/schroeder/sensores', naoAutenticado, sensor.findAll)
-
-app.get('/schroeder/configuracoes', sensor.getConfiguracoes)
-
 app.get('/schroeder/logs/', naoAutenticado, log.findAll)
 
-app.post('/schroeder/login',
-  passport.authenticate('local', { failureRedirect: '/', failureFlash: true }),
-  function(req, res, next) {
-    res.json({ success: 1})
-  });
 
-app.get('/logout', function(req, res, next){
-  req.logout();
-  res.redirect('/');
+// Retorno de páginas
+app.get('/views/user/:page', naoAutenticado, function(req, res, next){
+  res.sendfile('public/views/user/index.html', { user: req.user });
 });
 
-function naoAutenticado(req, res, next) {
-  if (req.isAuthenticated()) { return next(); }
-  res.send({ error: 1 });
-}
-
-function naoAutenticadoHome(req, res, next) {
-  if (req.isAuthenticated()) { return next(); }
-  res.redirect('/');
-}
-
-function naoAutenticadoPage(req, res, next) {
-  if (req.isAuthenticated()) { return next(); }
-  res.send({ error: 1 });
-  //Caso volte a página principal
-  //res.redirect('/');
-}
-
-if ('development' === app.get('env')) {
-  app.use(errorHandler())
-}
-
-app.put('/schroeder/sensor/:id', naoAutenticado, function(req, res, next){
-  db.Sensor.find({ where: { id: req.param('id') } }).success(function(entity) {
-    if (entity) {
-      db.Client.find({ where: { password: req.body.password } }).success(function(entityUser) {
-        if (entityUser) {
-          var _log;
-          if(!entity.status){
-            _log = { ClientId: entityUser.id, descricao: entity.on };
-          }else{
-            _log = { ClientId: entityUser.id, descricao: entity.off };
-          }
-          entity.status = !entity.status;
-          entity.updateAttributes(entity).success(function(entity) {
-            db.Log.create(_log).success(function(entityLog) {
-              io.emit('new-log', entityLog, entityUser);
-              res.json({ error: 0, message: "Salvo com sucesso!", entity: entity })
-            });
-          })
-        } else {
-          res.send({ error: 2, message: "Usuário não cadastrado!" })
-        }
-      });
-    } else {
-      res.send({ error: 2, message: "Sensor não cadastrado!" })
-    }
-  })
+app.get('/views/sensor/:page', naoAutenticado, function(req, res, next){
+  res.sendfile('public/views/sensor/index.html', { user: req.user });
 });
 
-app.put('/schroeder/users/:id', naoAutenticado, users.update)
-app.get('/schroeder/create', function(req, res, next){
-  arduinos.createGet(req, res);
-  io.emit('new-medicao', {
-    temperature: req.param('temperatura'),
-    humidity: req.param('humidade'),
-    createdAt: new Date(),
-    updateAt: new Date(),
-  });
+app.get('/views/sensor/new/:page', naoAutenticado, function(req, res, next){
+  res.sendfile('public/views/sensor/new/index.html', { user: req.user });
 });
 
+app.get('/views/home/:page', naoAutenticado, function(req, res, next){
+  res.sendfile('public/views/home/index.html', { user: req.user });
+});
+
+app.get('/views/arduino/temporeal/:page', naoAutenticado, function(req, res, next){
+  res.sendfile('public/views/arduino/temporeal/index.html', { user: req.user });
+});
+
+app.get('/views/arduino/sensores/:page', naoAutenticado, function(req, res, next){
+  res.sendfile('public/views/arduino/sensores/index.html', { user: req.user });
+});
+
+app.get('/views/log/:page', naoAutenticado, function(req, res, next){
+  res.sendfile('public/views/log/index.html', { user: req.user });
+});
+
+app.get('/views/acao/:page', naoAutenticado, function(req, res, next){
+  res.sendfile('public/views/acao/index.html', { user: req.user });
+});
+
+app.get('/views/acao/new/:page', naoAutenticado, function(req, res, next){
+  res.sendfile('public/views/acao/new/index.html', { user: req.user });
+});
+
+app.get('/schroeder/medicoes/last', naoAutenticado, arduinos.findLast)
+
+// Autenticação teclado arduino
 app.get('/schroeder/autenticar/:password', function(req, res, next){
   db.Sensor.find({ where: { id: req.param('idSensor') } }).success(function(entity) {
     if (entity) {
-      db.Client.find({ where: { password: req.param('password') } }).success(function(entityUser) {
+      db.User.find({ where: { password: req.param('password') } }).success(function(entityUser) {
         if (entityUser) {
           var _log;
           if(!entity.status){
-            _log = { ClientId: entityUser.id, descricao: entity.on };
+            _log = { UserId: entityUser.id, descricao: entity.on };
           }else{
-            _log = { ClientId: entityUser.id, descricao: entity.off };
+            _log = { UserId: entityUser.id, descricao: entity.off };
           }
           entity.status = !entity.status;
           entity.updateAttributes(entity).success(function(entity) {
@@ -258,16 +200,77 @@ app.get('/schroeder/autenticar/:password', function(req, res, next){
   })
 });
 
+// Criar uma nova medição
+/*app.get('/schroeder/create', function(req, res, next){
+  arduinos.createGet(req, res);
+  io.emit('new-medicao', {
+    temperature: req.param('temperatura'),
+    humidity: req.param('humidade'),
+    createdAt: new Date(),
+    updateAt: new Date(),
+  });
+});*/
+
+app.get('/logout', function(req, res, next){
+  req.logout();
+  res.redirect('/');
+});
+
+app.post('/schroeder/login',
+  passport.authenticate('local', { failureRedirect: '/', failureFlash: true }),
+  function(req, res, next) {
+    res.json({ success: 1})
+});
+
 app.post('/schroeder/users', users.newUser)
-app.post('/schroeder/clients', naoAutenticado, client.newClient)
+
+app.post('/schroeder/acao', naoAutenticado, acao.newAcao)
+
 app.post('/schroeder/sensor', naoAutenticado, sensor.newSensor)
-app.get('/schroeder/arduinos/:id', naoAutenticado, arduinos.find)
+
 app.post('/schroeder/arduinos', naoAutenticado, arduinos.create)
+
+app.put('/schroeder/sensor/:id', naoAutenticado, function(req, res, next){
+  db.Sensor.find({ where: { id: req.param('id') } }).success(function(entity) {
+    if (entity) {
+      db.User.find({ where: { password: req.user.password } }).success(function(entityUser) {
+        if (entityUser) {
+          var _log;
+          if(!entity.status){
+            _log = { UserId: entityUser.id, descricao: entity.on };
+          }else{
+            _log = { UserId: entityUser.id, descricao: entity.off };
+          }
+          entity.status = !entity.status;
+          entity.updateAttributes(entity).success(function(entity) {
+            db.Log.create(_log).success(function(entityLog) {
+              io.emit('new-log', entityLog, entityUser);
+              res.json({ error: 0, message: "Salvo com sucesso!", entity: entity })
+            });
+          })
+        } else {
+          res.send({ error: 2, message: "Usuário não cadastrado!" })
+        }
+      });
+    } else {
+      res.send({ error: 2, message: "Sensor não cadastrado!" })
+    }
+  })
+});
+
+app.put('/schroeder/users/:id', naoAutenticado, users.update)
+
 app.del('/schroeder/arduinos/:id', naoAutenticado, arduinos.destroy)
+
 app.del('/schroeder/users/:id', naoAutenticado, users.destroy)
-app.del('/schroeder/clients/:id', naoAutenticado, client.destroy)
+
 app.del('/schroeder/sensor/:id', naoAutenticado, sensor.destroy)
 
+app.del('/schroeder/acao/:id', naoAutenticado, acao.destroy)
+
+if ('development' === app.get('env')) {
+  app.use(errorHandler())
+}
 
 var io = null;
 
@@ -281,6 +284,3 @@ db.sequelize.sync({ force: false }).complete(function(err) {
     io = require('socket.io')(http);
   }
 })
-
-
-

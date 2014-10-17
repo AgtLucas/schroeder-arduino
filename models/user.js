@@ -15,7 +15,8 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function(models) {
-        User.hasMany(models.Type)
+        User.belongsTo(models.Type)
+        User.hasMany(models.Log)
       }
     }
   })

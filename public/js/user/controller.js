@@ -1,5 +1,5 @@
 define(['js/app'], function (app) {
-  app.controller('perfil', function ($scope, $http, SweetAlert) {
+  app.controller('user', function ($scope, $http, SweetAlert) {
     angular.extend($scope, {
       dados: {}
     });

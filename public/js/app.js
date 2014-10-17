@@ -32,9 +32,9 @@ define(['angularAMD', 'angular-route'], function (angularAMD) {
       controller: 'home',
       controllerUrl: 'js/home/controller'
     })).when("/meus-dados", angularAMD.route({
-      templateUrl: '/views/perfil/' + Math.random(),
-      controller: 'perfil',
-      controllerUrl: 'js/perfil/controller'
+      templateUrl: '/views/user/' + Math.random(),
+      controller: 'user',
+      controllerUrl: 'js/user/controller'
     })).when("/tempo-real", angularAMD.route({
       templateUrl: '/views/arduino/temporeal/' + Math.random(),
       controller: 'tempoReal',
@@ -47,14 +47,14 @@ define(['angularAMD', 'angular-route'], function (angularAMD) {
       templateUrl: '/views/log/' + Math.random(),
       controller: 'log',
       controllerUrl: 'js/log/controller'
-    })).when("/new-client", angularAMD.route({
-      templateUrl: '/views/client/new/' + Math.random(),
-      controller: 'new-client',
-      controllerUrl: 'js/client/new/controller'
-    })).when("/client", angularAMD.route({
-      templateUrl: '/views/client/' + Math.random(),
-      controller: 'client',
-      controllerUrl: 'js/client/controller'
+    })).when("/new-acao", angularAMD.route({
+      templateUrl: '/views/acao/new/' + Math.random(),
+      controller: 'new-acao',
+      controllerUrl: 'js/acao/new/controller'
+    })).when("/acao", angularAMD.route({
+      templateUrl: '/views/acao/' + Math.random(),
+      controller: 'acao',
+      controllerUrl: 'js/acao/controller'
     })).when("/new-sensor", angularAMD.route({
       templateUrl: '/views/sensor/new/' + Math.random(),
       controller: 'new-sensor',
