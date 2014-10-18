@@ -264,7 +264,7 @@ app.put('/schroeder/sensor/:id', naoAutenticado, function(req, res, next){
             db.Log.create(_log).success(function(entityLog) {
               if(req.user){
                 io.to(req.user.id).emit('new-log', entityLog, entityUser);
-                io.to(entity.usuarioId).emit('update-sensor', entity);
+                io.to(req.user.id).emit('update-sensor', entity);
               }
               res.json({ error: 0, message: "Salvo com sucesso!", entity: entity })
             });

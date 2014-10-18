@@ -6,7 +6,7 @@ define(['js/app', 'socketIO'], function (app, socketIO) {
 
       socket.on('update-sensor', function(obj){
         for(var i = 0; i < $scope.dados.length; i++){
-          if($scope.dados[i].id = obj.id){
+          if($scope.dados[i].id == obj.id){
             $scope.dados[i] = obj;
           }
         }
@@ -20,14 +20,7 @@ define(['js/app', 'socketIO'], function (app, socketIO) {
     	})
 
     	$scope.toogle = function(obj){
-    		$http.put('/schroeder/sensor/' + obj.id, { password: $scope.clientePassword }).success(function(data, status, headers, config) {
-    			data = data.entity;
-		    	for(var i = 0; i < $scope.dados.length; i++){
-		    		if($scope.dados[i].id == data.id){
-		    			$scope.dados[i] = data;
-		    		}
-		    	}
-    		})
+    		$http.put('/schroeder/sensor/' + obj.id, { password: $scope.clientePassword });
     	};
 
 	 });
