@@ -305,6 +305,7 @@ db.sequelize.sync({ force: false }).complete(function(err) {
       console.log('Express server listening on port ' + app.get('port'))
     });
     io = require('socket.io')(http);
+    io.autenticarSocket = function(data){};
     io.on('connection', function (socket) {
       io.autenticarSocket = function(data){
         socket.join(data.id);

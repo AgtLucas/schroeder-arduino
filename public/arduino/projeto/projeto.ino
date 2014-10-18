@@ -10,6 +10,7 @@ unsigned long lastConnectionTime = 0;
 boolean lastConnected = false;
 const unsigned long postingInterval = 6000;
 
+const String token = "";
 
 //Teclado
 const byte numRows=4;
@@ -83,7 +84,7 @@ void loop() {
 
 void httpRequest() {
   if (client.connect(server, 80)) {
-    String url = "/schroeder/configuracoes";
+    String url = "/schroeder/configuracoes/" + token;
     client.println("GET " + url + " HTTP/1.0");
     client.println("Host: schroeder-arduino.herokuapp.com");
     client.println("Connection: close");
