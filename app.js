@@ -200,7 +200,11 @@ app.get('/schroeder/autenticar/:password', function(req, res, next){
                 for(var i = 0; i < entities.length; i++){
                   retorno = retorno + entities[i].id + "-" + entities[i].status + ";";
                 }
-                res.json('<' + retorno + '>')
+                if(entities.length > 0){
+                  res.json('<' + retorno + '>')
+                }else{
+                  res.json(retorno)
+                }
               })
             });
           })
