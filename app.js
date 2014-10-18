@@ -188,8 +188,10 @@ app.get('/schroeder/autenticar/:password', function(req, res, next){
           entity.status = !entity.status;
           entity.updateAttributes(entity).success(function(entity) {
             db.Log.create(_log).success(function(entityLog) {
-              io.emit('new-log', entityLog, entityUser);
-              io.emit('update-sensor', entity);
+              if(req.user){
+                io.emit('new-log', entityLog, entityUser);
+                io.to(req.user.id).emit('update-sensor', entity);
+              }
               db.Sensor.findAll().success(function(entities) {
                 var retorno = "";
                 for(var i = 0; i < entities.length; i++){
@@ -228,7 +230,9 @@ app.get('/logout', function(req, res, next){
 app.post('/schroeder/login',
   passport.authenticate('local', { failureRedirect: '/', failureFlash: true }),
   function(req, res, next) {
-    res.json({ success: 1})
+    db.Log.create({ UserId: req.user.id, descricao: "Logou no sistema" }).success(function(entityLog) {
+      res.json({ success: 1})
+    });
 });
 
 app.post('/schroeder/users', users.newUser)
@@ -242,7 +246,7 @@ app.post('/schroeder/sensor', naoAutenticado, sensor.newSensor)
 app.post('/schroeder/arduinos', naoAutenticado, arduinos.create)
 
 app.put('/schroeder/sensor/:id', naoAutenticado, function(req, res, next){
-  db.Sensor.find({ where: { id: req.param('id') } }).success(function(entity) {
+  db.Sensor.find({ where: { id: req.param('id'), usuarioId: req.user.id } }).success(function(entity) {
     if (entity) {
       db.User.find({ where: { password: req.user.password } }).success(function(entityUser) {
         if (entityUser) {
@@ -255,7 +259,10 @@ app.put('/schroeder/sensor/:id', naoAutenticado, function(req, res, next){
           entity.status = !entity.status;
           entity.updateAttributes(entity).success(function(entity) {
             db.Log.create(_log).success(function(entityLog) {
-              io.emit('new-log', entityLog, entityUser);
+              if(req.user){
+                io.to(req.user.id).emit('new-log', entityLog, entityUser);
+                io.to(entity.usuarioId).emit('update-sensor', entity);
+              }
               res.json({ error: 0, message: "Salvo com sucesso!", entity: entity })
             });
           })
@@ -287,7 +294,7 @@ if ('development' === app.get('env')) {
 
 var io = null;
 
-db.sequelize.sync({ force: true }).complete(function(err) {
+db.sequelize.sync({ force: false }).complete(function(err) {
   if (err) {
     throw err
   } else {

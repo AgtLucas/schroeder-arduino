@@ -5,6 +5,7 @@ define(['js/app', 'socketIO'], function (app, socketIO) {
       var socket = socketIO();
 
       socket.on('update-sensor', function(obj){
+        alert(obj.usuarioId);
         for(var i = 0; i < $scope.dados.length; i++){
           if($scope.dados[i].id = obj.id){
             $scope.dados[i] = obj;
