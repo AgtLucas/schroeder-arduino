@@ -36,7 +36,7 @@ exports.newSensor = function(req, res, next) {
 exports.getConfiguracoes = function(req, res, next) {
   db.Token.find({ where: { token: req.param('token') }}).success(function(entity) {
     if(entity){
-      db.Sensor.findAll({ where: { usuarioId: req.user.id } }).success(function(entities) {
+      db.Sensor.findAll({ order: 'id ASC', where: { usuarioId: entity.usuarioId } }).success(function(entities) {
         var retorno = "";
         for(var i = 0; i < entities.length; i++){
           retorno = retorno + entities[i].id + "-" + entities[i].status + ";";
