@@ -10,7 +10,7 @@ unsigned long lastConnectionTime = 0;
 boolean lastConnected = false;
 const unsigned long postingInterval = 6000;
 
-const String token = "";
+const String token = "BzQ81";
 
 //Teclado
 const byte numRows=4;
@@ -65,6 +65,8 @@ void loop() {
     }
   }
   if (!client.connected() && lastConnected) { 
+    Serial.println(retorno);
+        Serial.println("dakjshdjakshdkjsa");
     if(retorno != ""){
       Serial.println(getValue(getValue(retorno, ';', idBuzzer), '-', 1));
       if(getValue(getValue(retorno, ';', idBuzzer), '-', 1) == "true;" || getValue(getValue(retorno, ';', idBuzzer), '-', 1) == "true"){
