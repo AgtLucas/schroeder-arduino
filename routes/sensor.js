@@ -34,7 +34,7 @@ exports.newSensor = function(req, res, next) {
 }
 
 exports.getConfiguracoes = function(req, res, next) {
-  db.Sensor.findAll({order: 'id DESC'}).success(function(entities) {
+  db.Sensor.findAll({order: 'id ASC'}).success(function(entities) {
     var retorno = "";
     for(var i = 0; i < entities.length; i++){
       retorno = retorno + entities[i].id + "-" + entities[i].status + ";";
