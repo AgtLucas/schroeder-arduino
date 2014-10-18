@@ -1,7 +1,7 @@
 var db = require('../models')
 
 exports.findAll = function(req, res, next) {
-  db.Acao.findAll({ include: [ { model: db.Sensor, as: "sensorOrigem" }, { model: db.Sensor, as: "sensorDestino" }] }).success(function(entities) {
+  db.Acao.findAll({ include: [ { model: db.Sensor, as: "sensorOrigem" }, { model: db.Sensor, as: "sensorDestino" }], where: { usuarioId: req.user.id } }).success(function(entities) {
     res.json(entities)
   })
 }
@@ -24,6 +24,7 @@ exports.newAcao = function(req, res, next) {
       var acao = req.body;
       acao.sensorDestinoId = req.body.sensorDestino;
       acao.sensorOrigemId = req.body.sensorOrigem;
+      acao.usuarioId = req.user.id;
       db.Acao.create(acao).success(function(entity) {
         res.json({ error: 0, message: "Salvo com sucesso!" })
       });

@@ -11,6 +11,7 @@ module.exports = function(sequelize, DataTypes) {
       associate: function(models) {
         Acao.belongsTo(models.Sensor, { as: "sensorOrigem"});
         Acao.belongsTo(models.Sensor, { as: "sensorDestino"});
+        Acao.belongsTo(models.User, { as: "usuario"});
       }
     }
   })

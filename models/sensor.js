@@ -18,6 +18,12 @@ module.exports = function(sequelize, DataTypes) {
     off: {
       type: DataTypes.STRING
     },
+  }, {
+    classMethods: {
+      associate: function(models) {
+        Sensor.belongsTo(models.User, { as: "usuario"});
+      }
+    }
   })
 
   return Sensor

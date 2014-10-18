@@ -1,7 +1,8 @@
-var db = require('../models')
+var db = require('../models');
+var sequelize = require('sequelize');
 
 exports.findAll = function(req, res, next) {
-  db.Sensor.findAll().success(function(entities) {
+  db.Sensor.findAll({ include: [ { model: db.User, as: "usuario" } ], where: { usuarioId: req.user.id } }).success(function(entities) {
     res.json(entities)
   })
 }
@@ -19,10 +20,11 @@ exports.find = function(req, res, next) {
 exports.newSensor = function(req, res, next) {
   db.Sensor.find({ where: { nome: req.body.nome } }).success(function(entity) {
     if (entity) {
-      res.send({ error: 2, message: "Usuário já cadastrado!" })
+      res.send({ error: 2, message: "Sensor já cadastrado!" })
     } else {
       var sensor = req.body;
       sensor.status = false;
+      sensor.usuarioId = req.user.id;
       db.Sensor.create(sensor).success(function(entity) {
         res.json({ error: 0, message: "Salvo com sucesso!" })
       }).error(function(error, e){
@@ -42,64 +44,18 @@ exports.getConfiguracoes = function(req, res, next) {
 }
 
 exports.destroy = function(req, res, next) {
-  var passou = 0;
-  db.Acao.findAll({ where: { sensorOrigemId: req.param('id') } }).success(function(data) {
-    if(data.length > 0){
-      for(var i = 0; i < data.length; i++){
-        db.Acao.find({ where: { id: data[i].id } }).success(function(entity) {
-          if (entity) {
-            entity.destroy().success(function() {
-              if(i == data.length && passou == 0){
-                passou = 1;
-                db.Sensor.find({ where: { id: req.param('id') } }).success(function(entitySensor) {
-                  if (entitySensor) {
-                    entitySensor.destroy().success(function() {
-                      res.send(204)
-                    })
-                  } else {
-                    res.send(404)
-                  }
-                })
-              }
-            })
-          }
-        });
+  db.Acao.destroy({ where:
+    sequelize.or( { "sensorOrigemId": req.param('id') },
+    sequelize.or( { "sensorDestinoId": req.param('id') }))
+  }).success(function(){
+    db.Sensor.find({ where: { id: req.param('id') } }).success(function(entitySensor) {
+      if (entitySensor) {
+        entitySensor.destroy().success(function() {
+          res.send(204)
+        })
+      } else {
+        res.send(404)
       }
-    }else{
-      db.Acao.findAll({ where: { sensorDestinoId: req.param('id') } }).success(function(data) {
-        if(data.length > 0){
-          for(var i = 0; i < data.length; i++){
-            db.Acao.find({ where: { id: data[i].id } }).success(function(entity) {
-              if (entity) {
-                entity.destroy().success(function() {
-                  if(i == data.length && passou == 0){
-                    passou = 1;
-                    db.Sensor.find({ where: { id: req.param('id') } }).success(function(entitySensor) {
-                      if (entitySensor) {
-                        entitySensor.destroy().success(function() {
-                          res.send(204)
-                        })
-                      } else {
-                        res.send(404)
-                      }
-                    })
-                  }
-                })
-              }
-            });
-          }
-        }else{
-          db.Sensor.find({ where: { id: req.param('id') } }).success(function(entitySensor) {
-            if (entitySensor) {
-              entitySensor.destroy().success(function() {
-                res.send(204)
-              })
-            } else {
-              res.send(404)
-            }
-          })
-        }
-      })
-    }
-  })
+    })
+  });
 }

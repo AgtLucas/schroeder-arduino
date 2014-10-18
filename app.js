@@ -15,6 +15,7 @@ var express        = require('express')
   , acao = require('./routes/acao')
   , log = require('./routes/log')
   , sensor = require('./routes/sensor')
+  , token = require('./routes/token')
 
 app.set('port', process.env.PORT || 3000)
 app.use(bodyParser())
@@ -110,7 +111,9 @@ app.get('/schroeder/users/info', naoAutenticado, function(req, res, next){
   });
 });
 
-app.get('/schroeder/acao', acao.findAll)
+app.get('/schroeder/acao', naoAutenticado, acao.findAll)
+
+app.get('/schroeder/token', naoAutenticado, token.findAll)
 
 app.get('/schroeder/sensores', naoAutenticado, sensor.findAll)
 
@@ -134,6 +137,14 @@ app.get('/views/sensor/:page', naoAutenticado, function(req, res, next){
 
 app.get('/views/sensor/new/:page', naoAutenticado, function(req, res, next){
   res.sendfile('public/views/sensor/new/index.html', { user: req.user });
+});
+
+app.get('/views/token/:page', naoAutenticado, function(req, res, next){
+  res.sendfile('public/views/token/index.html', { user: req.user });
+});
+
+app.get('/views/token/new/:page', naoAutenticado, function(req, res, next){
+  res.sendfile('public/views/token/new/index.html', { user: req.user });
 });
 
 app.get('/views/home/:page', naoAutenticado, function(req, res, next){
@@ -222,6 +233,8 @@ app.post('/schroeder/login',
 
 app.post('/schroeder/users', users.newUser)
 
+app.post('/schroeder/token', naoAutenticado, token.newToken)
+
 app.post('/schroeder/acao', naoAutenticado, acao.newAcao)
 
 app.post('/schroeder/sensor', naoAutenticado, sensor.newSensor)
@@ -262,6 +275,8 @@ app.del('/schroeder/arduinos/:id', naoAutenticado, arduinos.destroy)
 
 app.del('/schroeder/users/:id', naoAutenticado, users.destroy)
 
+app.del('/schroeder/token/:id', naoAutenticado, token.destroy)
+
 app.del('/schroeder/sensor/:id', naoAutenticado, sensor.destroy)
 
 app.del('/schroeder/acao/:id', naoAutenticado, acao.destroy)
@@ -272,7 +287,7 @@ if ('development' === app.get('env')) {
 
 var io = null;
 
-db.sequelize.sync({ force: false }).complete(function(err) {
+db.sequelize.sync({ force: true }).complete(function(err) {
   if (err) {
     throw err
   } else {

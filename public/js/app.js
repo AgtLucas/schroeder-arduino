@@ -63,6 +63,14 @@ define(['angularAMD', 'angular-route'], function (angularAMD) {
       templateUrl: '/views/sensor/' + Math.random(),
       controller: 'sensor',
       controllerUrl: 'js/sensor/controller'
+    })).when("/new-token", angularAMD.route({
+      templateUrl: '/views/token/new/' + Math.random(),
+      controller: 'new-token',
+      controllerUrl: 'js/token/new/controller'
+    })).when("/token", angularAMD.route({
+      templateUrl: '/views/token/' + Math.random(),
+      controller: 'token',
+      controllerUrl: 'js/token/controller'
     })).otherwise({redirectTo: "/home"});
 
     var httpStatusInterceptor = function($window){
