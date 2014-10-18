@@ -34,13 +34,19 @@ exports.newSensor = function(req, res, next) {
 }
 
 exports.getConfiguracoes = function(req, res, next) {
-  db.Sensor.findAll({order: 'id ASC'}).success(function(entities) {
-    var retorno = "";
-    for(var i = 0; i < entities.length; i++){
-      retorno = retorno + entities[i].id + "-" + entities[i].status + ";";
+  db.Token.find({ where: { token: req.param('token') }}).success(function(entity) {
+    if(entity){
+      db.Sensor.findAll({ order: 'id ASC', where: { usuarioId: req.user.id } }).success(function(entities) {
+        var retorno = "";
+        for(var i = 0; i < entities.length; i++){
+          retorno = retorno + entities[i].id + "-" + entities[i].status + ";";
+        }
+        res.json('<' + retorno + '>')
+      })
+    }else{
+      res.json("");
     }
-    res.json('<' + retorno + '>')
-  })
+  });
 }
 
 exports.destroy = function(req, res, next) {

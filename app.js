@@ -100,7 +100,7 @@ app.get('/home', naoAutenticadoHome, function(req, res, next){
   res.sendfile('public/home.html', { user: req.user });
 });
 
-app.get('/schroeder/configuracoes', sensor.getConfiguracoes)
+app.get('/schroeder/configuracoes/:token', sensor.getConfiguracoes)
 
 app.get('/schroeder/users/info', naoAutenticado, function(req, res, next){
   res.json({
@@ -152,6 +152,8 @@ app.get('/views/home/:page', naoAutenticado, function(req, res, next){
 });
 
 app.get('/views/arduino/temporeal/:page', naoAutenticado, function(req, res, next){
+  io.emit("autenticar-room", req.user.id);
+  console.log("ssssssssssss");
   res.sendfile('public/views/arduino/temporeal/index.html', { user: req.user });
 });
 
