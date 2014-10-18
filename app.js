@@ -115,7 +115,10 @@ app.get('/schroeder/acao', naoAutenticado, acao.findAll)
 
 app.get('/schroeder/token', naoAutenticado, token.findAll)
 
-app.get('/schroeder/sensores', naoAutenticado, sensor.findAll)
+app.get('/schroeder/sensores', naoAutenticado, function(req, res, next){
+  io.autenticarSocket(req.user);
+  sensor.findAll(req, res, next);
+});
 
 app.get('/schroeder/medicoes', function(req, res, next){
   res.header("Access-Control-Allow-Origin", "*");
@@ -152,8 +155,6 @@ app.get('/views/home/:page', naoAutenticado, function(req, res, next){
 });
 
 app.get('/views/arduino/temporeal/:page', naoAutenticado, function(req, res, next){
-  io.emit("autenticar-room", req.user.id);
-  console.log("ssssssssssss");
   res.sendfile('public/views/arduino/temporeal/index.html', { user: req.user });
 });
 
@@ -304,5 +305,10 @@ db.sequelize.sync({ force: false }).complete(function(err) {
       console.log('Express server listening on port ' + app.get('port'))
     });
     io = require('socket.io')(http);
+    io.on('connection', function (socket) {
+      io.autenticarSocket = function(data){
+        socket.join(data.id);
+      };
+    });
   }
 })
