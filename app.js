@@ -192,7 +192,7 @@ app.get('/schroeder/autenticar/:password', function(req, res, next){
             db.Log.create(_log).success(function(entityLog) {
               if(req.user){
                 io.emit('new-log', entityLog, entityUser);
-                io.to(entityUser.id).emit('update-sensor', entity);
+                io.to(entity.usuarioId).emit('update-sensor', entity);
               }
               db.Sensor.findAll().success(function(entities) {
                 var retorno = "";
