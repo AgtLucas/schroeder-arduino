@@ -176,12 +176,11 @@ app.get('/views/acao/new/:page', naoAutenticado, function(req, res, next){
 
 app.get('/schroeder/medicoes/last', naoAutenticado, arduinos.findLast)
 
-// Autenticação teclado arduino
 app.get('/schroeder/autenticar/:password', function(req, res, next){
-  db.Sensor.find({ where: { id: req.param('idSensor') } }).success(function(entity) {
-    if (entity) {
-      db.User.find({ where: { password: req.param('password') } }).success(function(entityUser) {
-        if (entityUser) {
+  db.User.find({ where: { password: req.param('password') } }).success(function(entityUser) {
+    if (entityUser) {
+      db.Sensor.find({ where: { favorito: true, usuarioId: entityUser.id } }).success(function(entity) {
+        if (entity) {
           var _log;
           if(!entity.status){
             _log = { UserId: entityUser.id, descricao: entity.on };
@@ -201,19 +200,19 @@ app.get('/schroeder/autenticar/:password', function(req, res, next){
                   retorno = retorno + entities[i].id + "-" + entities[i].status + ";";
                 }
                 if(entities.length > 0){
-                  res.json('<' + retorno + '>')
+                  res.send('<' + retorno + '>')
                 }else{
-                  res.json(retorno)
+                  res.send(retorno)
                 }
               })
             });
           })
         } else {
-          res.send({ error: 2, message: "Usuário não cadastrado!" })
+          res.send("")
         }
       });
     } else {
-      res.send({ error: 2, message: "Sensor não cadastrado!" })
+      res.send("")
     }
   })
 });
@@ -285,6 +284,8 @@ app.put('/schroeder/sensor/:id', naoAutenticado, function(req, res, next){
 
 app.put('/schroeder/users/:id', naoAutenticado, users.update)
 
+app.put('/schroeder/sensor/favorito/:id', naoAutenticado, sensor.updateFavorito)
+
 app.del('/schroeder/arduinos/:id', naoAutenticado, arduinos.destroy)
 
 app.del('/schroeder/users/:id', naoAutenticado, users.destroy)
@@ -300,6 +301,10 @@ if ('development' === app.get('env')) {
 }
 
 var io = null;
+
+db.Acao.drop();
+db.Log.drop();
+db.Sensor.drop();
 
 db.sequelize.sync({ force: false }).complete(function(err) {
   if (err) {

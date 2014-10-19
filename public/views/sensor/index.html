@@ -22,6 +22,7 @@
 				<td style="width: 200px">{{obj.on}}</td>
 				<td style="width: 200px">{{obj.off}}</td>
 				<td style="width: 100px" class="text-center">
+					<button ng-click="favorito(obj, $index)" ng-disabled="obj.favorito" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-heart"></i></button>
 					<button ng-click="remover(obj, $index)" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></button>
 				</td>
 			</tr>

@@ -14,5 +14,13 @@ define(['js/app'], function (app) {
       })
     };
 
+    $scope.favorito = function(obj, index) {
+      $http.put('/schroeder/sensor/favorito/' + obj.id).success(function(data, status, headers, config) {
+        angular.extend($scope, {
+          dados: data
+       });
+      })
+    };
+
   });
 });

@@ -18,18 +18,25 @@ exports.find = function(req, res, next) {
 }
 
 exports.newSensor = function(req, res, next) {
-  db.Sensor.find({ where: { nome: req.body.nome } }).success(function(entity) {
-    if (entity) {
-      res.send({ error: 2, message: "Sensor já cadastrado!" })
-    } else {
-      var sensor = req.body;
-      sensor.status = false;
-      sensor.usuarioId = req.user.id;
-      db.Sensor.create(sensor).success(function(entity) {
-        res.json({ error: 0, message: "Salvo com sucesso!" })
-      }).error(function(error, e){
-      });
+  db.Sensor.count({ where: { usuarioId: req.user.id } }).success(function(result) {
+    var favorito = false;
+    if(parseInt(result) == 0){
+      var favorito = true;
     }
+    db.Sensor.find({ where: { nome: req.body.nome, usuarioId: req.user.id } }).success(function(entity) {
+      if (entity) {
+        res.send({ error: 2, message: "Sensor já cadastrado!" })
+      } else {
+        var sensor = req.body;
+        sensor.status = false;
+        sensor.favorito = favorito;
+        sensor.usuarioId = req.user.id;
+        db.Sensor.create(sensor).success(function(entity) {
+          res.json({ error: 0, message: "Salvo com sucesso!" })
+        }).error(function(error, e){
+        });
+      }
+    })
   })
 }
 
@@ -41,11 +48,32 @@ exports.getConfiguracoes = function(req, res, next) {
         for(var i = 0; i < entities.length; i++){
           retorno = retorno + entities[i].id + "-" + entities[i].status + ";";
         }
-        res.json('<' + retorno + '>')
+        if(entities.length > 0){
+          res.json('<' + retorno + '>')
+        }else{
+          res.json("");
+        }
       })
     }else{
       res.json("");
     }
+  });
+}
+
+exports.updateFavorito = function(req, res, next) {
+  db.Sensor.update({favorito: false}, { where: { usuarioId: req.user.id }}).success(function(status) {
+    db.Sensor.find({ where: { id: req.param('id') } }).success(function(entitySensor) {
+      if (entitySensor) {
+        req.body.favorito = !req.body.favorito;
+        entitySensor.updateAttributes(req.body).success(function(entity) {
+          db.Sensor.findAll({ include: [ { model: db.User, as: "usuario" } ], where: { usuarioId: req.user.id } }).success(function(entities) {
+            res.json(entities)
+          })
+        })
+      } else {
+        res.send({ error: 0, message: "Sensor não encontrado!" })
+      }
+    })
   });
 }
 

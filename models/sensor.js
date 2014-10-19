@@ -18,6 +18,9 @@ module.exports = function(sequelize, DataTypes) {
     off: {
       type: DataTypes.STRING
     },
+    favorito: {
+      type: DataTypes.BOOLEAN
+    },
   }, {
     classMethods: {
       associate: function(models) {
