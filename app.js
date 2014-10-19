@@ -302,11 +302,7 @@ if ('development' === app.get('env')) {
 
 var io = null;
 
-db.Acao.drop();
-db.Log.drop();
-db.Sensor.drop();
-
-db.sequelize.sync({ force: false }).complete(function(err) {
+db.sequelize.sync({ force: true }).complete(function(err) {
   if (err) {
     throw err
   } else {
