@@ -184,7 +184,7 @@ app.get('/schroeder/autenticar/:password', function(req, res, next){
           var _log;
           if(!entity.status){
             _log = { UserId: entityUser.id, descricao: entity.on };
-          }else{a
+          }else{
             _log = { UserId: entityUser.id, descricao: entity.off };
           }
           entity.status = !entity.status;
@@ -206,11 +206,11 @@ app.get('/schroeder/autenticar/:password', function(req, res, next){
             });
           })
         } else {
-          res.send("")
+          res.send("f")
         }
       });
     } else {
-      res.send("")
+      res.send("d")
     }
   })
 });
