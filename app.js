@@ -190,10 +190,8 @@ app.get('/schroeder/autenticar/:password', function(req, res, next){
           entity.status = !entity.status;
           entity.updateAttributes(entity).success(function(entity) {
             db.Log.create(_log).success(function(entityLog) {
-              if(req.user){
-                io.emit('new-log', entityLog, entityUser);
-                io.to(entity.usuarioId).emit('update-sensor', entity);
-              }
+              io.emit('new-log', entityLog, entityUser);
+              io.to(entity.usuarioId).emit('update-sensor', entity);
               db.Sensor.findAll().success(function(entities) {
                 var retorno = "";
                 for(var i = 0; i < entities.length; i++){
