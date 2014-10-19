@@ -184,7 +184,7 @@ app.get('/schroeder/autenticar/:password', function(req, res, next){
           var _log;
           if(!entity.status){
             _log = { UserId: entityUser.id, descricao: entity.on };
-          }else{
+          }else{a
             _log = { UserId: entityUser.id, descricao: entity.off };
           }
           entity.status = !entity.status;
@@ -192,7 +192,7 @@ app.get('/schroeder/autenticar/:password', function(req, res, next){
             db.Log.create(_log).success(function(entityLog) {
               if(req.user){
                 io.emit('new-log', entityLog, entityUser);
-                io.to(req.user.id).emit('update-sensor', entity);
+                io.to(entityUser.id).emit('update-sensor', entity);
               }
               db.Sensor.findAll().success(function(entities) {
                 var retorno = "";
@@ -302,7 +302,7 @@ if ('development' === app.get('env')) {
 
 var io = null;
 
-db.sequelize.sync({ force: true }).complete(function(err) {
+db.sequelize.sync({ force: false }).complete(function(err) {
   if (err) {
     throw err
   } else {
