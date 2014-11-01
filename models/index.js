@@ -4,8 +4,8 @@ var fs        = require('fs')
   , lodash    = require('lodash')
   , db        = {}
 
-  if (process.env.HEROKU_POSTGRESQL_MAUVE_URL) {
-    var match = process.env.HEROKU_POSTGRESQL_MAUVE_URL.match(/postgres:\/\/([^:]+):([^@]+)@([^:]+):(\d+)\/(.+)/)
+  if (process.env.HEROKU_POSTGRESQL_PURPLE_URL) {
+    var match = process.env.HEROKU_POSTGRESQL_PURPLE_URL.match(/postgres:\/\/([^:]+):([^@]+)@([^:]+):(\d+)\/(.+)/)
     var sequelize = new Sequelize(match[5], match[1], match[2], {
       dialect: 'postgres',
       protocol: 'postgres',
